@@ -8,7 +8,7 @@ export function FinalCTASection({ locale }: { locale: string }) {
   const ref = useScrollReveal();
   return (
     <section ref={ref} className="py-24 relative overflow-hidden"
-      style={{ background: "linear-gradient(150deg, #050D1A 0%, #0A1628 50%, #0D1E35 100%)" }}>
+      style={{ background: "linear-gradient(150deg, #0F2553 0%, #1A3A6B 50%, #112B60 100%)" }}>
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full opacity-20"
           style={{ background: "radial-gradient(ellipse, rgba(37,99,235,0.5) 0%, transparent 70%)" }} />

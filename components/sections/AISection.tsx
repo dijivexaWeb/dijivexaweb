@@ -17,7 +17,7 @@ export function AISection({ locale }: { locale: string }) {
   const ref = useScrollReveal();
   return (
     <section ref={ref} className="py-24 relative overflow-hidden"
-      style={{ background: "linear-gradient(150deg, #050D1A 0%, #0A1628 60%, #0D1E35 100%)" }}>
+      style={{ background: "linear-gradient(150deg, #0F2553 0%, #1A3A6B 60%, #112B60 100%)" }}>
       {/* Grid */}
       <div className="absolute inset-0 opacity-10 pointer-events-none"
         style={{ backgroundImage: "linear-gradient(rgba(59,130,246,0.2) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.2) 1px,transparent 1px)", backgroundSize: "48px 48px" }} />
@@ -35,7 +35,7 @@ export function AISection({ locale }: { locale: string }) {
             className="gsap-reveal-left"
           >
             <div className="rounded-2xl p-6 border relative"
-              style={{ background: "rgba(15,32,68,0.6)", backdropFilter: "blur(20px)", borderColor: "rgba(59,130,246,0.2)", boxShadow: "0 24px 64px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)" }}>
+              style={{ background: "rgba(20,50,100,0.55)", backdropFilter: "blur(20px)", borderColor: "rgba(59,130,246,0.25)", boxShadow: "0 24px 64px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08)" }}>
 
               <div className="flex items-center gap-3 mb-5 pb-4 border-b" style={{ borderColor: "rgba(59,130,246,0.1)" }}>
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center"

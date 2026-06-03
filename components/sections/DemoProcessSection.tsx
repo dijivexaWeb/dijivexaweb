@@ -14,7 +14,7 @@ export function DemoProcessSection({ locale }: { locale: string }) {
   const ref = useScrollReveal();
   return (
     <section ref={ref} className="py-24 relative overflow-hidden"
-      style={{ background: "linear-gradient(150deg, #050D1A 0%, #0A1628 55%, #0D1E35 100%)" }}>
+      style={{ background: "linear-gradient(150deg, #0F2553 0%, #1A3A6B 55%, #112B60 100%)" }}>
       <div className="absolute inset-0 opacity-10 pointer-events-none"
         style={{ backgroundImage: "linear-gradient(rgba(59,130,246,0.2) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.2) 1px,transparent 1px)", backgroundSize: "56px 56px" }} />
 
@@ -29,7 +29,7 @@ export function DemoProcessSection({ locale }: { locale: string }) {
             <motion.div
               key={step.num}
               className="gsap-item relative flex flex-col items-center text-center p-8 rounded-2xl border"
-              style={{ background: "rgba(255,255,255,0.03)", borderColor: "rgba(59,130,246,0.15)", backdropFilter: "blur(12px)" }}
+              style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(59,130,246,0.2)", backdropFilter: "blur(12px)" }}
               whileHover={{ scale: 1.02, borderColor: "rgba(59,130,246,0.35)" }}
             >
               {i < 2 && (

@@ -1,26 +1,6 @@
 @import "tailwindcss";
 
 :root {
-  /* === Dijivexa Renk Sistemi === */
-
-  /* Ana koyu — hero & öne çıkan bölümler */
-  --navy-950: #050D1A;
-  --navy-900: #0A1628;
-  --navy-800: #0F2044;
-  --navy-700: #1A3260;
-
-  /* Mavi aksanlar */
-  --blue-600: #2563EB;
-  --blue-500: #3B82F6;
-  --blue-400: #60A5FA;
-  --blue-50:  #EFF6FF;
-
-  /* Teal / Yeşil — sağlık, başarı */
-  --teal-500: #0D9488;
-  --teal-400: #2DD4BF;
-  --teal-50:  #F0FDFA;
-
-  /* Nötr açık — içerik bölümleri */
   --white:    #FFFFFF;
   --gray-50:  #F8FAFC;
   --gray-100: #F1F5F9;
@@ -30,10 +10,16 @@
   --gray-700: #334155;
   --gray-900: #0F172A;
 
-  /* Uyarı */
-  --amber-500: #F59E0B;
+  --blue-brand: #2563EB;
+  --blue-50:    #EFF6FF;
+  --teal-brand: #0D9488;
+  --teal-50:    #F0FDFA;
+  --amber:      #F59E0B;
 
-  /* Tailwind bağlantıları */
+  /* Section dark → orta-koyu mavi, cave-black değil */
+  --section-dark-from: #0F2553;
+  --section-dark-to:   #1A3A6B;
+
   --background: var(--white);
   --foreground: var(--gray-900);
 }
@@ -42,17 +28,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
-
-  --color-navy-950: var(--navy-950);
-  --color-navy-900: var(--navy-900);
-  --color-navy-800: var(--navy-800);
-  --color-navy-700: var(--navy-700);
-  --color-blue-brand: var(--blue-600);
-  --color-teal-brand: var(--teal-500);
-  --color-gray-50: var(--gray-50);
 }
 
-/* === Base === */
 html { scroll-behavior: smooth; }
 
 body {
@@ -62,31 +39,26 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* === Section geçiş sınıfları === */
+.section-white { background: #FFFFFF; }
+.section-gray  { background: #F8FAFC; }
+.section-blue  { background: #EFF6FF; }
+.section-teal  { background: #F0FDFA; }
+
 .section-dark {
-  background: linear-gradient(160deg, var(--navy-950) 0%, var(--navy-900) 60%, #0D1E35 100%);
+  background: linear-gradient(150deg, #0F2553 0%, #1A3A6B 55%, #112B60 100%);
   color: white;
 }
-.section-white { background: var(--white); color: var(--gray-900); }
-.section-gray  { background: var(--gray-50); color: var(--gray-900); }
-.section-blue  { background: var(--blue-50); color: var(--gray-900); }
-.section-teal  { background: var(--teal-50); color: var(--gray-900); }
 
-/* === GSAP başlangıç gizleme === */
-.gsap-reveal {
-  opacity: 0;
-  transform: translateY(28px);
-}
+/* GSAP başlangıç durumları */
+.gsap-reveal       { opacity: 0; transform: translateY(28px); }
 .gsap-reveal-left  { opacity: 0; transform: translateX(-32px); }
 .gsap-reveal-right { opacity: 0; transform: translateX(32px); }
 .gsap-scale-in     { opacity: 0; transform: scale(0.92); }
 
-/* === Scrollbar === */
 ::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--gray-100); }
-::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 4px; }
+::-webkit-scrollbar-track { background: #F1F5F9; }
+::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 4px; }
 
-/* === Reduced motion === */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

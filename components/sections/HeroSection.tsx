@@ -29,7 +29,7 @@ export function HeroSection({ locale }: { locale: string }) {
   return (
     <section
       className="relative min-h-screen flex items-center pt-16 overflow-hidden"
-      style={{ background: "linear-gradient(150deg, #050D1A 0%, #0A1628 55%, #0D1E35 100%)" }}
+      style={{ background: "linear-gradient(150deg, #0F2553 0%, #1A3A6B 55%, #112B60 100%)" }}
       onMouseMove={handleMouseMove}
     >
       {/* Tech grid overlay */}
@@ -106,7 +106,7 @@ export function HeroSection({ locale }: { locale: string }) {
             <motion.div style={{ rotateX, rotateY, transformStyle: "preserve-3d" }} className="relative">
               {/* Main card */}
               <div className="rounded-2xl overflow-hidden border"
-                style={{ background: "linear-gradient(135deg, rgba(15,32,68,0.95), rgba(10,22,40,0.98))", borderColor: "rgba(59,130,246,0.2)", boxShadow: "0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03), inset 0 1px 0 rgba(255,255,255,0.06)" }}
+                style={{ background: "linear-gradient(135deg, rgba(20,50,100,0.95), rgba(15,37,83,0.98))", borderColor: "rgba(59,130,246,0.25)", boxShadow: "0 32px 80px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.08)" }}
               >
                 {/* Dashboard header */}
                 <div className="flex items-center justify-between px-5 py-4 border-b" style={{ borderColor: "rgba(59,130,246,0.1)" }}>
@@ -193,7 +193,7 @@ function FloatingCard({ card, index }: { card: typeof floatingCards[0]; index: n
       }}
       className={`absolute ${positions[index]} flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border z-10`}
       style={{
-        background: "rgba(10,22,40,0.92)",
+        background: "rgba(15,37,83,0.92)",
         backdropFilter: "blur(16px)",
         borderColor: `${card.color}30`,
         boxShadow: `0 8px 32px rgba(0,0,0,0.3), 0 0 0 1px ${card.color}15`,
