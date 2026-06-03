@@ -93,34 +93,34 @@
 - ⬜ Section 15: **Final CTA** — büyük CTA banner
 
 ### Ürün Sayfaları
-- ⬜ `/[locale]/dijivexa-clinic`
-- ⬜ `/[locale]/ozellikler`
-- ⬜ `/[locale]/ai-klinik-asistani`
-- ⬜ `/[locale]/whatsapp-takip`
-- ⬜ `/[locale]/fiyatlandirma`
+- ✅ `/[locale]/dijivexa-clinic`
+- ✅ `/[locale]/ozellikler`
+- ✅ `/[locale]/ai-klinik-asistani`
+- ✅ `/[locale]/whatsapp-takip`
+- ✅ `/[locale]/fiyatlandirma`
 
 ### Çözüm Sayfaları
-- ⬜ `/[locale]/sac-ekimi-merkezleri`
-- ⬜ `/[locale]/estetik-klinikleri`
-- ⬜ `/[locale]/guzellik-merkezleri`
-- ⬜ `/[locale]/lazer-epilasyon-merkezleri`
-- ⬜ `/[locale]/trikoloji-merkezleri`
+- ✅ `/[locale]/sac-ekimi-merkezleri`
+- ✅ `/[locale]/estetik-klinikleri`
+- ✅ `/[locale]/guzellik-merkezleri`
+- ✅ `/[locale]/lazer-epilasyon-merkezleri`
+- ✅ `/[locale]/trikoloji-merkezleri`
 
 ### Hizmet Sayfaları
-- ⬜ `/[locale]/dijivexa-growth`
-- ⬜ `/[locale]/dijivexa-web`
-- ⬜ `/[locale]/dijivexa-mobile`
-- ⬜ `/[locale]/dijivexa-studio`
-- ⬜ `/[locale]/dijivexa-ai`
+- ✅ `/[locale]/dijivexa-growth`
+- ✅ `/[locale]/dijivexa-web`
+- ✅ `/[locale]/dijivexa-mobile`
+- ✅ `/[locale]/dijivexa-studio`
+- ✅ `/[locale]/dijivexa-ai`
 
 ### Sistem Sayfaları
-- ⬜ `/[locale]/demo` — 15 gün demo kayıt formu (React Hook Form + Zod)
-- ⬜ `/[locale]/iletisim`
-- ⬜ `/[locale]/giris`
-- ⬜ `/[locale]/blog` + `/[locale]/blog/[slug]`
-- ⬜ `/[locale]/gizlilik-politikasi`
-- ⬜ `/[locale]/kullanim-sartlari`
-- ⬜ `/[locale]/kvkk`
+- ✅ `/[locale]/demo` — React Hook Form, Supabase submit
+- ✅ `/[locale]/iletisim`
+- ✅ `/[locale]/giris`
+- ✅ `/[locale]/blog`
+- ✅ `/[locale]/gizlilik-politikasi`
+- ✅ `/[locale]/kullanim-sartlari`
+- ✅ `/[locale]/kvkk`
 
 ### Demo Kayıt Backend
 - ⬜ Supabase Edge Function: tenant + user otomatik oluşturma
