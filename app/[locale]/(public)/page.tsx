@@ -5,6 +5,7 @@ import { SolutionGridSection } from "@/components/sections/SolutionGridSection";
 import { AISection } from "@/components/sections/AISection";
 import { WhatsAppSection } from "@/components/sections/WhatsAppSection";
 import { StatsSection } from "@/components/sections/StatsSection";
+import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { ServicesGridSection } from "@/components/sections/ServicesGridSection";
 import { DemoProcessSection } from "@/components/sections/DemoProcessSection";
 import { SecuritySection } from "@/components/sections/SecuritySection";
@@ -27,6 +28,7 @@ export default async function HomePage({
       <AISection locale={locale} />
       <WhatsAppSection locale={locale} />
       <StatsSection />
+      <TestimonialsSection />
       <ServicesGridSection locale={locale} />
       <DemoProcessSection locale={locale} />
       <SecuritySection />

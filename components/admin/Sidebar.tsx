@@ -34,6 +34,7 @@ const navGroups: NavGroup[] = [
       { href: "/tr/admin/faqs", label: "SSS", icon: HelpCircle },
       { href: "/tr/admin/blog", label: "Blog", icon: BookOpen },
       { href: "/tr/admin/seo", label: "SEO", icon: Search },
+      { href: "/tr/admin/testimonials", label: "Referanslar", icon: Users },
     ],
   },
   {
