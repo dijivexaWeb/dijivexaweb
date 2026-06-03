@@ -49,11 +49,7 @@ body {
   color: white;
 }
 
-/* GSAP başlangıç durumları */
-.gsap-reveal       { opacity: 0; transform: translateY(28px); }
-.gsap-reveal-left  { opacity: 0; transform: translateX(-32px); }
-.gsap-reveal-right { opacity: 0; transform: translateX(32px); }
-.gsap-scale-in     { opacity: 0; transform: scale(0.92); }
+/* GSAP — başlangıç durumu JS'e bırakıldı, CSS'te saklanmıyor */
 
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: #F1F5F9; }
