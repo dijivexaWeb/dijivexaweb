@@ -46,24 +46,24 @@
 
 ## FAZ 3 — Admin Panel (`/admin`)
 
-- ⬜ Admin auth (Supabase Auth, email/şifre)
-- ⬜ `app/[locale]/(admin)/admin/layout.tsx` (sidebar + topbar)
-- ⬜ Admin dashboard (`/admin`) — istatistikler
-- ⬜ Site Ayarları (`/admin/settings`)
-- ⬜ Menü Yönetimi (`/admin/menus`)
-- ⬜ Sayfa Listesi (`/admin/pages`)
-- ⬜ Sayfa Düzenleme + Section Builder (`/admin/pages/[id]`)
-- ⬜ Medya Kütüphanesi (`/admin/media`)
-- ⬜ Modül Yönetimi (`/admin/modules`)
-- ⬜ Hizmet Yönetimi (`/admin/services`)
-- ⬜ SSS Yönetimi (`/admin/faqs`)
-- ⬜ Blog Listesi (`/admin/blog`)
-- ⬜ Blog Düzenleme (`/admin/blog/[id]`)
-- ⬜ Form Kayıtları / Lead Listesi (`/admin/forms`)
-- ⬜ Lead Pipeline - Kanban (`/admin/leads`)
-- ⬜ Tenant/Demo Listesi (`/admin/tenants`)
-- ⬜ Tenant Detay (`/admin/tenants/[id]`)
-- ⬜ Global SEO Ayarları (`/admin/seo`)
+- ✅ Admin auth (Supabase Auth, email/şifre — `/tr/giris`)
+- ✅ `app/[locale]/(admin)/admin/layout.tsx` (sidebar + topbar)
+- ✅ Admin dashboard (`/admin`) — istatistik kartları + hızlı erişim
+- ✅ Site Ayarları (`/admin/settings`) — marka, iletişim, analytics
+- ✅ Menü Yönetimi (`/admin/menus`) — header/footer/mobil, dil sekmeli
+- ✅ Sayfa Listesi (`/admin/pages`) — CRUD tablo
+- ✅ Medya Kütüphanesi (`/admin/media`) — upload + liste
+- ✅ Modül Yönetimi (`/admin/modules`) — Dijivexa Clinic modülleri
+- ✅ Hizmet Yönetimi (`/admin/services`)
+- ✅ SSS Yönetimi (`/admin/faqs`) — tam CRUD, dil + kategori
+- ✅ Blog Listesi (`/admin/blog`) — oluştur + sil
+- ✅ Form Kayıtları (`/admin/forms`) — tüm başvurular, durum takibi
+- ✅ Lead Pipeline - Kanban (`/admin/leads`) — sürükle değil ilerlet
+- ✅ Tenant/Demo Listesi (`/admin/tenants`)
+- ✅ Kullanıcılar (`/admin/users`)
+- ✅ Abonelikler (`/admin/subscriptions`)
+- ✅ Global SEO Ayarları (`/admin/seo`)
+- ⬜ Sayfa Düzenleme + Section Builder (`/admin/pages/[id]`) — FAZ 4'te
 
 ---
 
