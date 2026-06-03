@@ -96,9 +96,17 @@ export function Header({ locale }: { locale: string }) {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           scrolled
-            ? "bg-white/95 backdrop-blur-xl border-b border-gray-100 shadow-sm shadow-black/5"
-            : "bg-transparent"
+            ? "border-b shadow-lg"
+            : "border-b border-white/5"
         )}
+        style={{
+          background: scrolled
+            ? "rgba(12,28,65,0.97)"
+            : "rgba(12,28,65,0.85)",
+          backdropFilter: "blur(16px)",
+          borderColor: scrolled ? "rgba(59,130,246,0.15)" : "rgba(255,255,255,0.05)",
+          boxShadow: scrolled ? "0 4px 24px rgba(0,0,0,0.3)" : "none",
+        }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           {/* Logo */}
@@ -113,7 +121,7 @@ export function Header({ locale }: { locale: string }) {
                 <Link
                   key={item.key}
                   href={item.href}
-                  className={cn("px-3 py-2 text-sm transition-colors rounded-lg hover:bg-gray-100", scrolled ? "text-gray-600 hover:text-gray-900" : "text-white/80 hover:text-white hover:bg-white/10")}
+                  className="px-3 py-2 text-sm text-white/75 hover:text-white transition-colors rounded-lg hover:bg-white/10"
                 >
                   {item.label}
                 </Link>
@@ -124,7 +132,7 @@ export function Header({ locale }: { locale: string }) {
                   onMouseEnter={() => setOpenMenu(item.key)}
                   onMouseLeave={() => setOpenMenu(null)}
                 >
-                  <button className={cn("flex items-center gap-1 px-3 py-2 text-sm transition-colors rounded-lg", scrolled ? "text-gray-600 hover:text-gray-900 hover:bg-gray-100" : "text-white/80 hover:text-white hover:bg-white/10")}>
+                  <button className="flex items-center gap-1 px-3 py-2 text-sm text-white/75 hover:text-white transition-colors rounded-lg hover:bg-white/10">
                     {item.label}
                     <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-200", openMenu === item.key && "rotate-180")} />
                   </button>
@@ -175,7 +183,7 @@ export function Header({ locale }: { locale: string }) {
 
             <Link
               href={`/${locale}/giris`}
-              className={cn("px-4 py-2 text-sm transition-colors", scrolled ? "text-gray-600 hover:text-gray-900" : "text-white/70 hover:text-white")}
+              className="px-4 py-2 text-sm text-white/70 hover:text-white transition-colors"
             >
               {t("login")}
             </Link>

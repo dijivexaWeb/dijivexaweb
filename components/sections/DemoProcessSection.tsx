@@ -1,58 +1,136 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { useScrollReveal } from "@/lib/useScrollReveal";
-
-const steps = [
-  { num: "01", title: "Bilgilerini gir", desc: "Klinik veya işletme bilgilerini forma gir. 2 dakika sürer.", icon: "📝" },
-  { num: "02", title: "Demo hesabın açılır", desc: "Dijivexa Clinic paneliniz otomatik kurulur, giriş bilgileri gönderilir.", icon: "🚀" },
-  { num: "03", title: "15 gün test et", desc: "Tüm modülleri gerçek verilerle dene. Ücret veya kart gerekmez.", icon: "✅" },
-];
+import { useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 export function DemoProcessSection({ locale }: { locale: string }) {
-  const ref = useScrollReveal();
+  const [form, setForm] = useState({ full_name: "", email: "", phone: "", business_name: "", business_type: "sac_ekimi" });
+  const [loading, setLoading] = useState(false);
+  const [done, setDone] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    await createClient().from("site_form_submissions").insert({ ...form, form_slug: "demo", terms_accepted: true });
+    setLoading(false);
+    setDone(true);
+  }
+
   return (
-    <section ref={ref} className="py-24 relative overflow-hidden"
+    <section className="py-24 relative overflow-hidden"
       style={{ background: "linear-gradient(150deg, #0F2553 0%, #1A3A6B 55%, #112B60 100%)" }}>
       <div className="absolute inset-0 opacity-10 pointer-events-none"
-        style={{ backgroundImage: "linear-gradient(rgba(59,130,246,0.2) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.2) 1px,transparent 1px)", backgroundSize: "56px 56px" }} />
+        style={{ backgroundImage: "linear-gradient(rgba(59,130,246,0.25) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.25) 1px,transparent 1px)", backgroundSize: "56px 56px" }} />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="gsap-reveal text-center mb-14">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">15 gün ücretsiz deneyin.</h2>
-          <p className="max-w-lg mx-auto" style={{ color: "#94A3B8" }}>3 adımda demo hesabınız hazır.</p>
-        </div>
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-        <div className="gsap-stagger grid md:grid-cols-3 gap-6 mb-12">
-          {steps.map((step, i) => (
-            <motion.div
-              key={step.num}
-              className="gsap-item relative flex flex-col items-center text-center p-8 rounded-2xl border"
-              style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(59,130,246,0.2)", backdropFilter: "blur(12px)" }}
-              whileHover={{ scale: 1.02, borderColor: "rgba(59,130,246,0.35)" }}
-            >
-              {i < 2 && (
-                <div className="hidden md:block absolute top-12 -right-3 text-gray-600 text-xl z-10">→</div>
+          {/* Left: Info */}
+          <motion.div initial={{ opacity: 0, x: -32 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Dijivexa&apos;yı 15 Gün Ücretsiz Deneyin</h2>
+            <p className="text-lg mb-8" style={{ color: "#94A3B8" }}>
+              Demo hesabınızı oluşturun. Kredi kartı gerekmez, anında erişim sağlayın.
+            </p>
+
+            <div className="space-y-4">
+              {[
+                { num: "01", text: "Formu doldurun — 2 dakika sürer" },
+                { num: "02", text: "Demo hesabınız otomatik açılır" },
+                { num: "03", text: "15 gün tüm modülleri test edin" },
+              ].map((s) => (
+                <div key={s.num} className="flex items-center gap-4">
+                  <span className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold shrink-0"
+                    style={{ background: "rgba(37,99,235,0.2)", color: "#60A5FA", border: "1px solid rgba(59,130,246,0.25)" }}>{s.num}</span>
+                  <p className="text-white text-sm">{s.text}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-4">
+              {["500+ aktif klinik", "Kurulum desteği", "Türkçe arayüz"].map((t) => (
+                <div key={t} className="flex items-center gap-1.5 text-sm" style={{ color: "#94A3B8" }}>
+                  <CheckCircle2 className="w-4 h-4" style={{ color: "#34D399" }} />{t}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right: Inline form */}
+          <motion.div initial={{ opacity: 0, x: 32 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+            <div className="rounded-2xl border p-8"
+              style={{ background: "rgba(255,255,255,0.05)", backdropFilter: "blur(16px)", borderColor: "rgba(59,130,246,0.2)" }}>
+              {done ? (
+                <div className="text-center py-8">
+                  <CheckCircle2 className="w-16 h-16 mx-auto mb-4" style={{ color: "#34D399" }} />
+                  <p className="text-white text-xl font-bold mb-2">Başvurunuz alındı!</p>
+                  <p style={{ color: "#94A3B8" }}>Demo bilgileriniz e-posta ile gönderilecek.</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <h3 className="text-white font-semibold text-lg mb-5">Ücretsiz Demo Başlat</h3>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-medium mb-1.5" style={{ color: "#94A3B8" }}>Ad Soyad *</label>
+                      <input required value={form.full_name} onChange={e => setForm(f => ({ ...f, full_name: e.target.value }))}
+                        className="w-full px-3 py-2.5 rounded-xl text-sm text-white outline-none focus:ring-2 transition-all"
+                        style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(148,163,184,0.15)" }}
+                        placeholder="Ad Soyad" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium mb-1.5" style={{ color: "#94A3B8" }}>Telefon *</label>
+                      <input required value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
+                        className="w-full px-3 py-2.5 rounded-xl text-sm text-white outline-none"
+                        style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(148,163,184,0.15)" }}
+                        placeholder="0500 000 00 00" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium mb-1.5" style={{ color: "#94A3B8" }}>E-posta *</label>
+                    <input required type="email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                      className="w-full px-3 py-2.5 rounded-xl text-sm text-white outline-none"
+                      style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(148,163,184,0.15)" }}
+                      placeholder="klinik@ornek.com" />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium mb-1.5" style={{ color: "#94A3B8" }}>İşletme Adı *</label>
+                    <input required value={form.business_name} onChange={e => setForm(f => ({ ...f, business_name: e.target.value }))}
+                      className="w-full px-3 py-2.5 rounded-xl text-sm text-white outline-none"
+                      style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(148,163,184,0.15)" }}
+                      placeholder="Kliniğinizin adı" />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium mb-1.5" style={{ color: "#94A3B8" }}>İşletme Türü</label>
+                    <select value={form.business_type} onChange={e => setForm(f => ({ ...f, business_type: e.target.value }))}
+                      className="w-full px-3 py-2.5 rounded-xl text-sm text-white outline-none"
+                      style={{ background: "rgba(15,37,83,0.98)", border: "1px solid rgba(148,163,184,0.15)" }}>
+                      <option value="sac_ekimi">Saç Ekimi Merkezi</option>
+                      <option value="estetik">Estetik Kliniği</option>
+                      <option value="guzellik">Güzellik Merkezi</option>
+                      <option value="lazer">Lazer Epilasyon</option>
+                      <option value="trikoloji">Trikoloji Merkezi</option>
+                      <option value="diger">Diğer</option>
+                    </select>
+                  </div>
+
+                  <button type="submit" disabled={loading}
+                    className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:-translate-y-0.5 disabled:opacity-60"
+                    style={{ background: "linear-gradient(135deg, #2563EB, #3B82F6)", boxShadow: "0 8px 20px rgba(37,99,235,0.4)" }}>
+                    {loading ? "Gönderiliyor..." : <><span>Demo Hesabımı Oluştur</span><ArrowRight className="w-4 h-4" /></>}
+                  </button>
+
+                  <p className="text-center text-xs" style={{ color: "#475569" }}>
+                    Kredi kartı gerekmez · 15 gün ücretsiz
+                  </p>
+                </form>
               )}
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-4"
-                style={{ background: "rgba(37,99,235,0.12)", border: "1px solid rgba(59,130,246,0.2)" }}>
-                {step.icon}
-              </div>
-              <span className="text-xs font-bold mb-2" style={{ color: "#3B82F6" }}>Adım {step.num}</span>
-              <h3 className="text-white font-semibold text-lg mb-3">{step.title}</h3>
-              <p className="text-sm leading-relaxed" style={{ color: "#94A3B8" }}>{step.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="gsap-reveal flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link href={`/${locale}/demo`}
-            className="px-8 py-4 text-base font-semibold text-white rounded-xl transition-all hover:-translate-y-0.5"
-            style={{ background: "linear-gradient(135deg, #2563EB, #3B82F6)", boxShadow: "0 8px 24px rgba(37,99,235,0.4)" }}>
-            Ücretsiz Demo Başlat
-          </Link>
-          <p className="text-sm" style={{ color: "#64748B" }}>Kredi kartı gerekmez · Kurulum desteği dahil</p>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
