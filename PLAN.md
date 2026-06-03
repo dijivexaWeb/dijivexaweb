@@ -24,23 +24,23 @@
 
 ## FAZ 2 — Supabase Veritabanı
 
-- ⬜ `migrations/001_cms.sql` — CMS tabloları
+- ✅ `migrations/001_cms.sql` — CMS tabloları
   - site_settings, site_languages, site_menus, site_menu_items
   - site_pages, site_sections, site_section_blocks, site_translations
   - site_media, site_modules, site_services
   - site_faqs, site_blog_posts, site_blog_categories
   - site_testimonials, site_pricing_blocks, site_seo_meta, site_redirects
-- ⬜ `migrations/002_saas.sql` — Demo/SaaS tabloları
-  - trial_signups, tenants, clinics, clinic_branches
-  - users, user_roles, subscriptions, trial_logs
-  - onboarding_steps, onboarding_progress, lead_sources, sales_notes
-- ⬜ `migrations/003_forms.sql` — Form/Lead tabloları
-  - site_forms, site_form_fields, site_form_submissions
-- ⬜ `migrations/004_integrations.sql` — AI/WhatsApp tabloları
+- ✅ `migrations/002_saas.sql` — Demo/SaaS tabloları
+  - tenants, clinics, clinic_branches, user_roles
+  - subscriptions, trial_logs, onboarding_steps, onboarding_progress
+  - lead_sources, sales_notes, admin_audit_log
+- ✅ `migrations/003_forms.sql` — Form/Lead tabloları
+  - site_forms, site_form_submissions
+- ✅ `migrations/004_integrations.sql` — AI/WhatsApp tabloları
   - ai_provider_settings, ai_prompt_templates, ai_usage_logs
   - whatsapp_templates, whatsapp_message_logs, notification_events
-- ⬜ RLS politikaları (public okuma, admin tam erişim, tenant izolasyonu)
-- ⬜ Migration'ları Supabase'e uygula
+- ✅ RLS politikaları (public okuma, admin tam erişim, tenant izolasyonu)
+- ✅ Migration'ları Supabase'e uygula
 
 ---
 
