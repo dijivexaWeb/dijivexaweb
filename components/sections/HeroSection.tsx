@@ -1,218 +1,210 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-import { CheckCircle2 } from "lucide-react";
-
-const Spline = dynamic(() => import("@splinetool/react-spline"), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className="w-16 h-16 rounded-full border-4 border-[#2563EB]/30 border-t-[#2563EB] animate-spin" />
-    </div>
-  ),
-});
+import { useRef, useEffect } from "react";
+import { CheckCircle2, ArrowRight, Sparkles } from "lucide-react";
 
 const floatingCards = [
-  { icon: "📅", text: "Yeni randevu oluşturuldu", color: "#2563EB", delay: 0 },
-  { icon: "💬", text: "WhatsApp hatırlatma gönderildi", color: "#00C2A8", delay: 0.4 },
-  { icon: "🤖", text: "AI değerlendirme hazır", color: "#38BDF8", delay: 0.8 },
-  { icon: "💰", text: "Kasa tahsilatı alındı", color: "#00C2A8", delay: 1.2 },
-  { icon: "📦", text: "Stok otomatik düştü", color: "#F59E0B", delay: 1.6 },
+  { icon: "📅", text: "Yeni randevu oluşturuldu", sub: "Az önce", color: "#3B82F6", delay: 0.2 },
+  { icon: "🤖", text: "AI değerlendirme hazır", sub: "Ahmet Y. • 2 dk önce", color: "#0D9488", delay: 0.5 },
+  { icon: "💬", text: "WhatsApp gönderildi", sub: "3 hatırlatma", color: "#10B981", delay: 0.8 },
+  { icon: "💰", text: "₺2.400 tahsilat", sub: "Kasa güncel", color: "#F59E0B", delay: 1.1 },
 ];
 
-const trustItems = [
-  "Kurulum desteği dahil",
-  "Kredi kartı gerekmez",
-  "15 gün ücretsiz demo",
-  "Çok dilli kullanım",
-];
+const trustItems = ["Kurulum desteği dahil", "Kredi kartı gerekmez", "15 gün ücretsiz", "Çok dilli"];
 
 export function HeroSection({ locale }: { locale: string }) {
-  return (
-    <section className="relative min-h-screen flex items-center pt-16 overflow-hidden bg-[#07111F]">
-      {/* Background gradient */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#2563EB]/8 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#38BDF8]/5 rounded-full blur-[100px]" />
-      </div>
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const rotateX = useSpring(useTransform(mouseY, [-300, 300], [8, -8]), { stiffness: 100, damping: 20 });
+  const rotateY = useSpring(useTransform(mouseX, [-300, 300], [-8, 8]), { stiffness: 100, damping: 20 });
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-          {/* Left: Text */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {/* Badge */}
+  function handleMouseMove(e: React.MouseEvent) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left - rect.width / 2);
+    mouseY.set(e.clientY - rect.top - rect.height / 2);
+  }
+
+  return (
+    <section
+      className="relative min-h-screen flex items-center pt-16 overflow-hidden"
+      style={{ background: "linear-gradient(150deg, #050D1A 0%, #0A1628 55%, #0D1E35 100%)" }}
+      onMouseMove={handleMouseMove}
+    >
+      {/* Tech grid overlay */}
+      <div className="absolute inset-0 pointer-events-none opacity-20"
+        style={{ backgroundImage: "linear-gradient(rgba(59,130,246,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.15) 1px, transparent 1px)", backgroundSize: "64px 64px" }}
+      />
+
+      {/* Gradient orbs */}
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 70%)" }} />
+      <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(13,148,136,0.08) 0%, transparent 70%)" }} />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 lg:py-28">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+          {/* Left */}
+          <motion.div initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1, duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#2563EB]/10 border border-[#2563EB]/20 text-[#38BDF8] text-xs font-medium mb-6"
+              transition={{ delay: 0.15 }}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium mb-6"
+              style={{ background: "rgba(59,130,246,0.1)", borderColor: "rgba(59,130,246,0.25)", color: "#93C5FD" }}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-pulse" />
+              <Sparkles className="w-3.5 h-3.5" />
               Klinik & Güzellik Merkezleri İçin
             </motion.div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight mb-6">
-              İşletmenizi{" "}
-              <span className="bg-gradient-to-r from-[#2563EB] to-[#38BDF8] bg-clip-text text-transparent">
-                yazılım, AI
+            <h1 className="text-4xl sm:text-5xl xl:text-6xl font-bold text-white leading-[1.12] tracking-tight mb-6">
+              Kliniğinizi{" "}
+              <span style={{ background: "linear-gradient(135deg, #3B82F6, #2DD4BF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                tek panelden
               </span>{" "}
-              ve dijital büyüme sistemiyle yönetin.
+              yönetin.
             </h1>
 
-            <p className="text-lg text-[#94a3b8] leading-relaxed mb-8 max-w-xl">
-              Dijivexa; klinik ve güzellik merkezleri için randevu, hasta takibi, kasa, stok, operasyon ve WhatsApp iletişimini tek platformda birleştirir.
+            <p className="text-lg leading-relaxed mb-8 max-w-xl" style={{ color: "#94A3B8" }}>
+              Randevu, hasta takibi, kasa, stok, operasyon ve WhatsApp iletişimi — hepsi tek platformda. AI destekli, çok dilli, çok şubeli.
             </p>
 
-            {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-3 mb-8">
-              <Link
-                href={`/${locale}/demo`}
-                className="inline-flex items-center justify-center px-6 py-3.5 text-base font-semibold text-white bg-[#2563EB] hover:bg-[#1d4ed8] rounded-xl transition-all hover:shadow-lg hover:shadow-[#2563EB]/30 hover:-translate-y-0.5"
+              <Link href={`/${locale}/demo`}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-white rounded-xl transition-all hover:-translate-y-0.5"
+                style={{ background: "linear-gradient(135deg, #2563EB, #3B82F6)", boxShadow: "0 8px 24px rgba(37,99,235,0.35)" }}
               >
-                15 Gün Ücretsiz Dene
+                15 Gün Ücretsiz Dene <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link
-                href={`/${locale}/iletisim`}
-                className="inline-flex items-center justify-center px-6 py-3.5 text-base font-semibold text-white bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl transition-all"
+              <Link href={`/${locale}/iletisim`}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold rounded-xl border transition-all hover:-translate-y-0.5"
+                style={{ color: "#CBD5E1", borderColor: "rgba(148,163,184,0.2)", background: "rgba(255,255,255,0.04)" }}
               >
                 Canlı Demo Talep Et
               </Link>
             </div>
 
-            {/* Trust items */}
             <div className="flex flex-wrap gap-x-5 gap-y-2">
               {trustItems.map((item) => (
-                <div key={item} className="flex items-center gap-1.5 text-sm text-[#64748B]">
-                  <CheckCircle2 className="w-4 h-4 text-[#00C2A8] shrink-0" />
+                <div key={item} className="flex items-center gap-1.5 text-sm" style={{ color: "#64748B" }}>
+                  <CheckCircle2 className="w-3.5 h-3.5" style={{ color: "#2DD4BF" }} />
                   {item}
                 </div>
               ))}
             </div>
           </motion.div>
 
-          {/* Right: 3D + Floating Cards */}
+          {/* Right: 3D Dashboard */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative h-[480px] lg:h-[560px]"
+            initial={{ opacity: 0, scale: 0.9, rotateY: -12 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ delay: 0.25, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            style={{ perspective: "1200px", perspectiveOrigin: "50% 40%" }}
           >
-            {/* Spline 3D Scene */}
-            <div className="absolute inset-0 rounded-2xl overflow-hidden">
-              <div className="w-full h-full bg-gradient-to-br from-[#0B172A] to-[#07111F] rounded-2xl border border-[#1e2d45] flex items-center justify-center">
-                {/* Dashboard mockup placeholder - Spline scene buraya gelecek */}
-                <DashboardMockup />
-              </div>
-            </div>
+            <motion.div style={{ rotateX, rotateY, transformStyle: "preserve-3d" }} className="relative">
+              {/* Main card */}
+              <div className="rounded-2xl overflow-hidden border"
+                style={{ background: "linear-gradient(135deg, rgba(15,32,68,0.95), rgba(10,22,40,0.98))", borderColor: "rgba(59,130,246,0.2)", boxShadow: "0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03), inset 0 1px 0 rgba(255,255,255,0.06)" }}
+              >
+                {/* Dashboard header */}
+                <div className="flex items-center justify-between px-5 py-4 border-b" style={{ borderColor: "rgba(59,130,246,0.1)" }}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold"
+                      style={{ background: "linear-gradient(135deg, #2563EB, #3B82F6)" }}>D</div>
+                    <div>
+                      <p className="text-white text-xs font-semibold">Dijivexa Clinic</p>
+                      <p className="text-xs" style={{ color: "#64748B" }}>Bugün — 3 Haziran</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {[{ v: "24", label: "Randevu", c: "#3B82F6" }, { v: "8", label: "Hasta", c: "#2DD4BF" }, { v: "₺14K", label: "Gelir", c: "#10B981" }].map(s => (
+                      <div key={s.label} className="text-center px-3 py-1.5 rounded-lg" style={{ background: "rgba(255,255,255,0.04)" }}>
+                        <p className="text-xs font-bold" style={{ color: s.c }}>{s.v}</p>
+                        <p className="text-xs" style={{ color: "#475569" }}>{s.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
-            {/* Floating notification cards */}
-            {floatingCards.map((card, i) => (
-              <FloatingCard key={i} card={card} index={i} />
-            ))}
+                {/* Appointments */}
+                <div className="p-5 space-y-2">
+                  {[
+                    { name: "Ahmet Yılmaz", time: "09:00", op: "Saç Ekimi", status: "Tamamlandı", c: "#10B981" },
+                    { name: "Fatma Kaya", time: "11:00", op: "PRP Seansı", status: "Devam Ediyor", c: "#3B82F6" },
+                    { name: "Mehmet Arslan", time: "14:30", op: "Trikoloji", status: "Bekliyor", c: "#F59E0B" },
+                    { name: "Ayşe Demir", time: "16:00", op: "Kontrol", status: "Bekliyor", c: "#F59E0B" },
+                  ].map((a) => (
+                    <div key={a.name} className="flex items-center gap-3 px-3 py-2.5 rounded-xl" style={{ background: "rgba(255,255,255,0.03)" }}>
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold shrink-0"
+                        style={{ background: `${a.c}18`, color: a.c }}>{a.name[0]}</div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-medium text-white truncate">{a.name}</p>
+                        <p className="text-xs" style={{ color: "#475569" }}>{a.op}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xs font-medium" style={{ color: "#94A3B8" }}>{a.time}</p>
+                        <p className="text-xs" style={{ color: a.c }}>{a.status}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bottom bar */}
+                <div className="px-5 pb-4 flex gap-2">
+                  {["Hasta", "Kasa", "Stok", "AI", "WhatsApp"].map((t) => (
+                    <div key={t} className="flex-1 text-center py-1.5 rounded-lg text-xs" style={{ background: "rgba(255,255,255,0.04)", color: "#64748B" }}>{t}</div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Floating notification cards */}
+              {floatingCards.map((card, i) => (
+                <FloatingCard key={i} card={card} index={i} />
+              ))}
+            </motion.div>
           </motion.div>
         </div>
       </div>
+
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
+        style={{ background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.03))" }} />
     </section>
-  );
-}
-
-function DashboardMockup() {
-  return (
-    <div className="w-full h-full p-6 flex flex-col gap-4">
-      {/* Header bar */}
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-[#2563EB] flex items-center justify-center text-white text-xs font-bold">D</div>
-          <div>
-            <div className="w-24 h-2.5 bg-[#1e2d45] rounded animate-pulse" />
-            <div className="w-16 h-2 bg-[#1e2d45] rounded mt-1 animate-pulse" />
-          </div>
-        </div>
-        <div className="flex gap-1.5">
-          <div className="w-6 h-6 rounded-full bg-[#1e2d45] animate-pulse" />
-          <div className="w-6 h-6 rounded-full bg-[#1e2d45] animate-pulse" />
-        </div>
-      </div>
-
-      {/* Stats row */}
-      <div className="grid grid-cols-3 gap-3">
-        {[
-          { label: "Randevu", value: "24", color: "#2563EB" },
-          { label: "Hasta", value: "128", color: "#00C2A8" },
-          { label: "Gelir", value: "₺18K", color: "#38BDF8" },
-        ].map((s) => (
-          <div key={s.label} className="bg-[#0B172A] rounded-xl p-3 border border-[#1e2d45]">
-            <p className="text-[#64748B] text-xs">{s.label}</p>
-            <p className="font-bold mt-1" style={{ color: s.color }}>{s.value}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Appointments list */}
-      <div className="flex-1 bg-[#0B172A] rounded-xl border border-[#1e2d45] p-4 overflow-hidden">
-        <p className="text-white text-xs font-semibold mb-3">Bugünkü Randevular</p>
-        {[
-          { name: "Ahmet Y.", time: "09:00", status: "Tamamlandı", color: "#00C2A8" },
-          { name: "Fatma K.", time: "10:30", status: "Aktif", color: "#2563EB" },
-          { name: "Mehmet A.", time: "13:00", status: "Bekliyor", color: "#F59E0B" },
-          { name: "Ayşe B.", time: "15:30", status: "Bekliyor", color: "#F59E0B" },
-        ].map((a) => (
-          <div key={a.name} className="flex items-center justify-between py-2 border-b border-[#1e2d45] last:border-0">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-full bg-[#1e2d45] flex items-center justify-center text-[#64748B] text-xs">{a.name[0]}</div>
-              <div>
-                <p className="text-white text-xs">{a.name}</p>
-                <p className="text-[#64748B] text-xs">{a.time}</p>
-              </div>
-            </div>
-            <span className="text-xs px-2 py-0.5 rounded-full" style={{ color: a.color, backgroundColor: `${a.color}15` }}>
-              {a.status}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
   );
 }
 
 function FloatingCard({ card, index }: { card: typeof floatingCards[0]; index: number }) {
   const positions = [
-    "top-4 -right-4",
-    "top-1/4 -left-6",
-    "bottom-1/3 -right-6",
-    "bottom-16 -left-4",
-    "top-1/2 right-0",
+    "top-6 -right-10",
+    "-top-5 left-12",
+    "bottom-20 -right-12",
+    "bottom-6 left-4",
   ];
-
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8, y: 10 }}
-      animate={{
-        opacity: 1,
-        scale: 1,
-        y: [0, -8, 0],
-      }}
+      initial={{ opacity: 0, scale: 0.7, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: [0, -10, 0] }}
       transition={{
-        opacity: { delay: card.delay + 0.5, duration: 0.4 },
-        scale: { delay: card.delay + 0.5, duration: 0.4 },
-        y: {
-          delay: card.delay + 0.9,
-          duration: 3 + index * 0.3,
-          repeat: Infinity,
-          ease: "easeInOut",
-        },
+        opacity: { delay: card.delay + 0.8, duration: 0.5 },
+        scale: { delay: card.delay + 0.8, duration: 0.5, ease: "backOut" },
+        y: { delay: card.delay + 1.3, duration: 3 + index * 0.4, repeat: Infinity, ease: "easeInOut" },
       }}
-      className={`absolute ${positions[index]} bg-[#0B172A]/90 backdrop-blur-xl border border-[#1e2d45] rounded-xl px-3.5 py-2.5 flex items-center gap-2.5 shadow-xl shadow-black/30 z-10`}
+      className={`absolute ${positions[index]} flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border z-10`}
+      style={{
+        background: "rgba(10,22,40,0.92)",
+        backdropFilter: "blur(16px)",
+        borderColor: `${card.color}30`,
+        boxShadow: `0 8px 32px rgba(0,0,0,0.3), 0 0 0 1px ${card.color}15`,
+      }}
     >
       <span className="text-base">{card.icon}</span>
-      <span className="text-white text-xs font-medium whitespace-nowrap">{card.text}</span>
-      <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: card.color }} />
+      <div>
+        <p className="text-xs font-medium text-white whitespace-nowrap">{card.text}</p>
+        <p className="text-xs whitespace-nowrap" style={{ color: "#64748B" }}>{card.sub}</p>
+      </div>
+      <span className="w-2 h-2 rounded-full shrink-0 animate-pulse" style={{ backgroundColor: card.color }} />
     </motion.div>
   );
 }

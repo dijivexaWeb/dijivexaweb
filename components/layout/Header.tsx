@@ -96,7 +96,7 @@ export function Header({ locale }: { locale: string }) {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           scrolled
-            ? "bg-[#07111F]/90 backdrop-blur-xl border-b border-[#1e2d45]/50 shadow-lg shadow-black/20"
+            ? "bg-white/95 backdrop-blur-xl border-b border-gray-100 shadow-sm shadow-black/5"
             : "bg-transparent"
         )}
       >
@@ -113,7 +113,7 @@ export function Header({ locale }: { locale: string }) {
                 <Link
                   key={item.key}
                   href={item.href}
-                  className="px-3 py-2 text-sm text-[#94a3b8] hover:text-white transition-colors rounded-lg hover:bg-white/5"
+                  className={cn("px-3 py-2 text-sm transition-colors rounded-lg hover:bg-gray-100", scrolled ? "text-gray-600 hover:text-gray-900" : "text-white/80 hover:text-white hover:bg-white/10")}
                 >
                   {item.label}
                 </Link>
@@ -124,7 +124,7 @@ export function Header({ locale }: { locale: string }) {
                   onMouseEnter={() => setOpenMenu(item.key)}
                   onMouseLeave={() => setOpenMenu(null)}
                 >
-                  <button className="flex items-center gap-1 px-3 py-2 text-sm text-[#94a3b8] hover:text-white transition-colors rounded-lg hover:bg-white/5">
+                  <button className={cn("flex items-center gap-1 px-3 py-2 text-sm transition-colors rounded-lg", scrolled ? "text-gray-600 hover:text-gray-900 hover:bg-gray-100" : "text-white/80 hover:text-white hover:bg-white/10")}>
                     {item.label}
                     <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-200", openMenu === item.key && "rotate-180")} />
                   </button>
@@ -175,7 +175,7 @@ export function Header({ locale }: { locale: string }) {
 
             <Link
               href={`/${locale}/giris`}
-              className="px-4 py-2 text-sm text-[#94a3b8] hover:text-white transition-colors"
+              className={cn("px-4 py-2 text-sm transition-colors", scrolled ? "text-gray-600 hover:text-gray-900" : "text-white/70 hover:text-white")}
             >
               {t("login")}
             </Link>

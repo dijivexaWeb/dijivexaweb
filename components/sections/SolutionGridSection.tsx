@@ -2,81 +2,57 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useScrollReveal } from "@/lib/useScrollReveal";
 
 const modules = [
-  { icon: "👤", label: "Hasta Yönetimi", desc: "Dijital hasta dosyası ve arşiv" },
-  { icon: "📅", label: "Randevu Takvimi", desc: "Günlük/haftalık/aylık takvim" },
-  { icon: "📋", label: "Muayene Formları", desc: "Trikoloji, epilasyon, PRP" },
-  { icon: "🤖", label: "AI Klinik Asistan", desc: "Yapay zeka muayene özeti" },
-  { icon: "🔬", label: "Operasyon Modülü", desc: "Saç ekimi operasyon takibi" },
-  { icon: "💰", label: "Kasa & Ödeme", desc: "Tahsilat, taksit, kasa" },
-  { icon: "📦", label: "Stok Yönetimi", desc: "Otomatik stok düşümü" },
-  { icon: "💬", label: "WhatsApp Bildirimleri", desc: "Otomatik randevu hatırlatma" },
-  { icon: "📊", label: "Seans Takibi", desc: "PRP, lazer, mezoterapi planı" },
-  { icon: "📈", label: "Raporlama", desc: "Gelir, doluluk, personel" },
+  { icon: "👤", label: "Hasta Yönetimi", desc: "Dijital dosya, fotoğraf arşivi, geçmiş işlemler", color: "#3B82F6" },
+  { icon: "📅", label: "Randevu Takvimi", desc: "Günlük/haftalık takvim, doktor bazlı planlama", color: "#0D9488" },
+  { icon: "📋", label: "Muayene Formları", desc: "Trikoloji, epilasyon, PRP, genel muayene", color: "#8B5CF6" },
+  { icon: "🤖", label: "AI Asistan", desc: "Muayene özeti, tedavi önerisi taslağı", color: "#06B6D4" },
+  { icon: "🔬", label: "Operasyon", desc: "Saç ekimi greft, ekip, taburcu takibi", color: "#10B981" },
+  { icon: "💰", label: "Kasa & Ödeme", desc: "Tahsilat, taksit, kapora yönetimi", color: "#F59E0B" },
+  { icon: "📦", label: "Stok Yönetimi", desc: "Otomatik düşüm, kritik stok alarmı", color: "#EF4444" },
+  { icon: "💬", label: "WhatsApp", desc: "Randevu hatırlatma, kampanya bildirimi", color: "#22C55E" },
+  { icon: "📊", label: "Seans Takibi", desc: "PRP, lazer, mezoterapi planları", color: "#F97316" },
+  { icon: "📈", label: "Raporlama", desc: "Gelir, doluluk, personel analizleri", color: "#6366F1" },
 ];
 
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.06 } },
-};
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
-
 export function SolutionGridSection({ locale }: { locale: string }) {
+  const ref = useScrollReveal();
   return (
-    <section className="py-24 bg-[#0B172A]">
+    <section ref={ref} className="section-white py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-14"
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Tüm klinik operasyonunuz tek sistemde.
-          </h2>
-          <p className="text-[#64748B] max-w-xl mx-auto">
-            10 farklı modül, tek panel, sıfır karmaşa.
-          </p>
-        </motion.div>
+        <div className="gsap-reveal text-center mb-14">
+          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4" style={{ background: "#EFF6FF", color: "#1D4ED8" }}>Çözüm</span>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: "#0F172A" }}>Tüm klinik operasyonunuz tek sistemde.</h2>
+          <p className="max-w-lg mx-auto" style={{ color: "#64748B" }}>10 modül, tek panel — sıfır karmaşa.</p>
+        </div>
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4"
-        >
+        <div className="gsap-stagger grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           {modules.map((m) => (
             <motion.div
               key={m.label}
-              variants={item}
-              whileHover={{ y: -4, scale: 1.02 }}
-              className="p-5 rounded-2xl bg-[#07111F] border border-[#1e2d45] hover:border-[#2563EB]/40 hover:shadow-lg hover:shadow-[#2563EB]/10 transition-all cursor-pointer group"
+              className="gsap-item group flex flex-col p-5 rounded-2xl border bg-white hover:shadow-lg transition-all duration-300 cursor-pointer"
+              style={{ borderColor: "#F1F5F9" }}
+              whileHover={{ y: -5, borderColor: m.color + "40" }}
             >
-              <span className="text-3xl mb-3 block group-hover:scale-110 transition-transform">{m.icon}</span>
-              <p className="text-white text-sm font-semibold mb-1">{m.label}</p>
-              <p className="text-[#64748B] text-xs leading-relaxed">{m.desc}</p>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform duration-300"
+                style={{ background: m.color + "12" }}>
+                {m.icon}
+              </div>
+              <p className="text-sm font-semibold mb-1" style={{ color: "#0F172A" }}>{m.label}</p>
+              <p className="text-xs leading-relaxed" style={{ color: "#94A3B8" }}>{m.desc}</p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center mt-10"
-        >
-          <Link
-            href={`/${locale}/dijivexa-clinic`}
-            className="inline-flex items-center gap-2 px-6 py-3 text-[#2563EB] border border-[#2563EB]/30 hover:bg-[#2563EB]/10 rounded-xl transition-colors text-sm font-medium"
-          >
+        <div className="gsap-reveal text-center mt-10">
+          <Link href={`/${locale}/dijivexa-clinic`}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold border transition-all hover:-translate-y-0.5"
+            style={{ color: "#2563EB", borderColor: "#BFDBFE", background: "#EFF6FF" }}>
             Dijivexa Clinic&apos;i İncele →
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

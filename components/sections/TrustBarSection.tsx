@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useScrollReveal } from "@/lib/useScrollReveal";
 
 const targets = [
-  { icon: "💇", label: "Saç Ekimi Merkezleri" },
+  { icon: "💇‍♂️", label: "Saç Ekimi Merkezleri" },
   { icon: "✨", label: "Estetik Klinikleri" },
   { icon: "💅", label: "Güzellik Merkezleri" },
   { icon: "⚡", label: "Lazer Epilasyon" },
@@ -12,25 +12,19 @@ const targets = [
 ];
 
 export function TrustBarSection() {
+  const ref = useScrollReveal();
   return (
-    <section className="py-16 bg-[#07111F] border-y border-[#1e2d45]/50">
+    <section ref={ref} className="section-white py-16 border-y" style={{ borderColor: "#F1F5F9" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <p className="text-center text-sm text-[#64748B] mb-8 font-medium uppercase tracking-wider">
+        <p className="gsap-reveal text-center text-xs font-semibold uppercase tracking-widest mb-8" style={{ color: "#94A3B8" }}>
           Klinik, güzellik ve hizmet işletmeleri için geliştirildi
         </p>
-        <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
-          {targets.map((t, i) => (
-            <motion.div
-              key={t.label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.5 }}
-              className="flex flex-col items-center gap-2 p-4 rounded-xl bg-[#0B172A] border border-[#1e2d45] hover:border-[#2563EB]/40 transition-colors group"
-            >
-              <span className="text-2xl group-hover:scale-110 transition-transform">{t.icon}</span>
-              <span className="text-xs text-[#64748B] text-center leading-tight">{t.label}</span>
-            </motion.div>
+        <div className="gsap-stagger grid grid-cols-3 sm:grid-cols-6 gap-3">
+          {targets.map((t) => (
+            <div key={t.label} className="gsap-item flex flex-col items-center gap-2 p-4 rounded-xl border border-transparent hover:border-blue-100 hover:bg-blue-50/50 transition-all group cursor-default">
+              <span className="text-2xl group-hover:scale-110 transition-transform duration-300">{t.icon}</span>
+              <span className="text-xs text-center font-medium leading-tight" style={{ color: "#64748B" }}>{t.label}</span>
+            </div>
           ))}
         </div>
       </div>

@@ -1,55 +1,45 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useScrollReveal } from "@/lib/useScrollReveal";
 import { Shield, Lock, Database, FileCheck, RotateCcw, Eye } from "lucide-react";
 
 const items = [
-  { icon: Shield, label: "Yetki yönetimi", desc: "Rol bazlı erişim kontrolü" },
-  { icon: Lock, label: "Veri izolasyonu", desc: "Klinik bazlı güvenli alan" },
-  { icon: Eye, label: "Güvenli oturum", desc: "JWT token doğrulama" },
-  { icon: FileCheck, label: "Audit log", desc: "Tüm işlemler kayıt altında" },
-  { icon: RotateCcw, label: "Günlük yedekleme", desc: "Otomatik veri yedekleme" },
-  { icon: Database, label: "Soft delete", desc: "Veriler fiziksel silinmez" },
+  { icon: Shield, label: "Yetki Yönetimi", desc: "Rol bazlı erişim kontrolü. Her kullanıcı sadece yetkili alana girer.", color: "#3B82F6" },
+  { icon: Lock, label: "Veri İzolasyonu", desc: "Her klinik kendi güvenli alanında. Veriler karışmaz.", color: "#0D9488" },
+  { icon: Eye, label: "Güvenli Oturum", desc: "JWT token doğrulama, oturum yönetimi.", color: "#8B5CF6" },
+  { icon: FileCheck, label: "Audit Log", desc: "Tüm işlemler kayıt altında. Kimin ne yaptığı izlenir.", color: "#F59E0B" },
+  { icon: RotateCcw, label: "Günlük Yedekleme", desc: "Otomatik günlük yedekleme, veri kaybı yok.", color: "#10B981" },
+  { icon: Database, label: "Soft Delete", desc: "Veriler fiziksel silinmez. İstediğinizde geri alınabilir.", color: "#6366F1" },
 ];
 
 export function SecuritySection() {
+  const ref = useScrollReveal();
   return (
-    <section className="py-24 bg-[#07111F] relative overflow-hidden">
-      {/* Dark grid background */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(37,99,235,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(37,99,235,0.03)_1px,transparent_1px)] bg-[size:48px_48px]" />
+    <section ref={ref} className="section-white py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="gsap-reveal text-center mb-14">
+          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4" style={{ background: "#EFF6FF", color: "#1D4ED8" }}>Güvenlik</span>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: "#0F172A" }}>Veriniz güvenli, erişiminiz kontrollü.</h2>
+          <p className="max-w-lg mx-auto" style={{ color: "#64748B" }}>Bulut tabanlı mimari, yetki kontrolü, veri izolasyonu ve günlük yedekleme.</p>
+        </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-14"
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Veriniz güvenli, erişiminiz kontrollü.
-          </h2>
-          <p className="text-[#64748B] max-w-xl mx-auto">
-            Dijivexa bulut tabanlı mimari, yetki kontrollü erişim, veri izolasyonu ve günlük yedekleme ile çalışır.
-          </p>
-        </motion.div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {items.map((item, i) => {
+        <div className="gsap-stagger grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {items.map((item) => {
             const Icon = item.icon;
             return (
               <motion.div
                 key={item.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="p-5 rounded-2xl bg-[#0B172A]/80 border border-[#1e2d45] hover:border-[#2563EB]/30 transition-colors group"
+                className="gsap-item p-6 rounded-2xl border bg-white hover:shadow-md transition-all"
+                style={{ borderColor: "#F1F5F9" }}
+                whileHover={{ y: -3, borderColor: item.color + "30" }}
               >
-                <div className="w-10 h-10 rounded-xl bg-[#2563EB]/10 flex items-center justify-center mb-4 group-hover:bg-[#2563EB]/20 transition-colors">
-                  <Icon className="w-5 h-5 text-[#38BDF8]" />
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+                  style={{ background: item.color + "12" }}>
+                  <Icon className="w-5 h-5" style={{ color: item.color }} />
                 </div>
-                <h3 className="text-white font-semibold text-sm mb-1">{item.label}</h3>
-                <p className="text-[#64748B] text-xs">{item.desc}</p>
+                <h3 className="font-semibold mb-1.5" style={{ color: "#0F172A" }}>{item.label}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: "#94A3B8" }}>{item.desc}</p>
               </motion.div>
             );
           })}

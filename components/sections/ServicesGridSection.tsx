@@ -2,57 +2,39 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useScrollReveal } from "@/lib/useScrollReveal";
 
 const services = [
-  { icon: "🏥", name: "Dijivexa Clinic", desc: "Klinik yönetim yazılımı.", href: "/dijivexa-clinic", color: "#2563EB" },
-  { icon: "📈", name: "Dijivexa Growth", desc: "Sosyal medya ve reklam yönetimi.", href: "/dijivexa-growth", color: "#00C2A8" },
-  { icon: "🌐", name: "Dijivexa Web", desc: "Web sitesi ve landing page.", href: "/dijivexa-web", color: "#38BDF8" },
-  { icon: "📱", name: "Dijivexa Mobile", desc: "Mobil uygulama geliştirme.", href: "/dijivexa-mobile", color: "#F59E0B" },
-  { icon: "⚙️", name: "Dijivexa Studio", desc: "Özel yazılım ve otomasyon.", href: "/dijivexa-studio", color: "#8B5CF6" },
-  { icon: "🤖", name: "Dijivexa AI", desc: "AI analiz, chatbot ve otomasyon.", href: "/dijivexa-ai", color: "#38BDF8" },
+  { icon: "🏥", name: "Dijivexa Clinic", desc: "Klinik yönetim yazılımı.", href: "/dijivexa-clinic", bg: "#EFF6FF", border: "#BFDBFE", iconBg: "#DBEAFE", accent: "#1D4ED8" },
+  { icon: "📈", name: "Dijivexa Growth", desc: "Sosyal medya ve reklam.", href: "/dijivexa-growth", bg: "#F0FDFA", border: "#99F6E4", iconBg: "#CCFBF1", accent: "#0F766E" },
+  { icon: "🌐", name: "Dijivexa Web", desc: "Web sitesi ve SEO.", href: "/dijivexa-web", bg: "#F0F9FF", border: "#BAE6FD", iconBg: "#E0F2FE", accent: "#0369A1" },
+  { icon: "📱", name: "Dijivexa Mobile", desc: "Mobil uygulama.", href: "/dijivexa-mobile", bg: "#FFF7ED", border: "#FED7AA", iconBg: "#FFEDD5", accent: "#C2410C" },
+  { icon: "⚙️", name: "Dijivexa Studio", desc: "Özel yazılım.", href: "/dijivexa-studio", bg: "#F5F3FF", border: "#DDD6FE", iconBg: "#EDE9FE", accent: "#6D28D9" },
+  { icon: "🤖", name: "Dijivexa AI", desc: "AI & otomasyon.", href: "/dijivexa-ai", bg: "#F0FDFA", border: "#A7F3D0", iconBg: "#D1FAE5", accent: "#047857" },
 ];
 
 export function ServicesGridSection({ locale }: { locale: string }) {
+  const ref = useScrollReveal();
   return (
-    <section className="py-24 bg-[#07111F]">
+    <section ref={ref} className="section-gray py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-14"
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            İşletmenizin ihtiyacına göre dijital çözümler.
-          </h2>
-          <p className="text-[#64748B] max-w-xl mx-auto">
-            Tek ürün değil, işletmenizin dijital büyüme ekosistemi.
-          </p>
-        </motion.div>
+        <div className="gsap-reveal text-center mb-14">
+          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4" style={{ background: "#EFF6FF", color: "#1D4ED8" }}>Hizmetler</span>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: "#0F172A" }}>İşletmenizin ihtiyacına göre dijital çözümler.</h2>
+          <p className="max-w-lg mx-auto" style={{ color: "#64748B" }}>Tek ürün değil, işletmenizin tam dijital ekosistemi.</p>
+        </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {services.map((s, i) => (
-            <motion.div
-              key={s.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              whileHover={{ y: -4 }}
-            >
-              <Link
-                href={`/${locale}${s.href}`}
-                className="flex flex-col h-full p-6 rounded-2xl bg-[#0B172A] border border-[#1e2d45] hover:border-opacity-50 transition-all group"
-                style={{ "--service-color": s.color } as React.CSSProperties}
-              >
-                <span className="text-3xl mb-4">{s.icon}</span>
-                <h3 className="text-white font-semibold mb-2 group-hover:text-[--service-color] transition-colors" style={{ color: "inherit" }}>
-                  {s.name}
-                </h3>
-                <p className="text-[#64748B] text-sm flex-1">{s.desc}</p>
-                <span className="mt-4 text-xs font-medium transition-colors" style={{ color: s.color }}>
-                  İncele →
-                </span>
+        <div className="gsap-stagger grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {services.map((s) => (
+            <motion.div key={s.name} className="gsap-item" whileHover={{ y: -5, scale: 1.01 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
+              <Link href={`/${locale}${s.href}`}
+                className="flex flex-col h-full p-6 rounded-2xl border transition-all hover:shadow-md"
+                style={{ background: s.bg, borderColor: s.border }}>
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl mb-4"
+                  style={{ background: s.iconBg }}>{s.icon}</div>
+                <h3 className="font-semibold mb-1.5" style={{ color: "#0F172A" }}>{s.name}</h3>
+                <p className="text-sm flex-1 mb-4" style={{ color: "#64748B" }}>{s.desc}</p>
+                <span className="text-sm font-semibold" style={{ color: s.accent }}>İncele →</span>
               </Link>
             </motion.div>
           ))}

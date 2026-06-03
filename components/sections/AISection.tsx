@@ -2,105 +2,113 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Bot, AlertCircle } from "lucide-react";
+import { useScrollReveal } from "@/lib/useScrollReveal";
+import { Bot, AlertTriangle, Cpu } from "lucide-react";
 
 const features = [
-  "Muayene özetini otomatik çıkarır",
-  "Risk bilgilerini görünür yapar",
-  "Tedavi önerisi taslağı oluşturur",
+  "Muayene özetini otomatik oluşturur",
+  "Risk bilgilerini görünür kılar",
+  "Tedavi önerisi taslağı hazırlar",
   "Doktor notlarını düzenler",
-  "Kliniğe özel API key ile çalışabilir",
+  "Kliniğe özel API key desteği",
 ];
 
 export function AISection({ locale }: { locale: string }) {
+  const ref = useScrollReveal();
   return (
-    <section className="py-24 bg-[#07111F] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <section ref={ref} className="py-24 relative overflow-hidden"
+      style={{ background: "linear-gradient(150deg, #050D1A 0%, #0A1628 60%, #0D1E35 100%)" }}>
+      {/* Grid */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none"
+        style={{ backgroundImage: "linear-gradient(rgba(59,130,246,0.2) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.2) 1px,transparent 1px)", backgroundSize: "48px 48px" }} />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left: AI Card mockup */}
+
+          {/* Left: 3D AI card */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, rotateY: 15, x: -40 }}
+            whileInView={{ opacity: 1, rotateY: 0, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="relative"
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            style={{ perspective: "1000px" }}
+            className="gsap-reveal-left"
           >
-            <div className="rounded-2xl bg-gradient-to-br from-[#0B172A] to-[#07111F] border border-[#1e2d45] p-6 shadow-2xl">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-xl bg-[#2563EB]/20 flex items-center justify-center">
-                  <Bot className="w-5 h-5 text-[#38BDF8]" />
+            <div className="rounded-2xl p-6 border relative"
+              style={{ background: "rgba(15,32,68,0.6)", backdropFilter: "blur(20px)", borderColor: "rgba(59,130,246,0.2)", boxShadow: "0 24px 64px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)" }}>
+
+              <div className="flex items-center gap-3 mb-5 pb-4 border-b" style={{ borderColor: "rgba(59,130,246,0.1)" }}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+                  style={{ background: "linear-gradient(135deg, rgba(37,99,235,0.3), rgba(13,148,136,0.3))" }}>
+                  <Bot className="w-5 h-5" style={{ color: "#93C5FD" }} />
                 </div>
                 <div>
-                  <p className="text-white font-semibold text-sm">AI Klinik Değerlendirme</p>
-                  <p className="text-[#64748B] text-xs">Gemini Pro destekli</p>
+                  <p className="text-white text-sm font-semibold">AI Klinik Değerlendirme</p>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <Cpu className="w-3 h-3" style={{ color: "#2DD4BF" }} />
+                    <p className="text-xs" style={{ color: "#2DD4BF" }}>Gemini Pro · işleniyor...</p>
+                  </div>
                 </div>
-                <span className="ml-auto text-xs px-2 py-1 rounded-full bg-[#00C2A8]/10 text-[#00C2A8]">Hazır</span>
               </div>
 
               <div className="space-y-3">
                 {[
-                  { label: "Hasta", value: "Ahmet Yılmaz, 34 yaş" },
-                  { label: "Şikayet", value: "Norwood Evre III, saç çizgisi gerilemiş" },
-                  { label: "Klinik Özet", value: "Hasta FUE tekniğine uygun aday. Donör alan yeterli..." },
-                  { label: "Öneri", value: "2800-3200 greft, 2 seans planlanabilir" },
+                  { label: "Hasta", value: "Ahmet Y. · 34 yaş · Erkek" },
+                  { label: "Tanı", value: "Norwood Evre III — saç çizgisi belirgin gerileme" },
+                  { label: "AI Özet", value: "Hasta FUE tekniğine uygun, donör alan yeterli. Beklenti gerçekçi." },
+                  { label: "Öneri", value: "2.800–3.200 greft, 1 seans planlanabilir." },
                 ].map((r) => (
-                  <div key={r.label} className="flex gap-3">
-                    <span className="text-[#64748B] text-xs w-24 shrink-0 pt-0.5">{r.label}</span>
-                    <span className="text-[#94a3b8] text-xs leading-relaxed">{r.value}</span>
+                  <div key={r.label} className="flex gap-3 p-3 rounded-xl" style={{ background: "rgba(255,255,255,0.03)" }}>
+                    <span className="text-xs w-16 shrink-0 pt-0.5 font-medium" style={{ color: "#64748B" }}>{r.label}</span>
+                    <span className="text-xs leading-relaxed" style={{ color: "#CBD5E1" }}>{r.value}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-5 p-3 rounded-xl bg-[#F59E0B]/10 border border-[#F59E0B]/20 flex gap-2">
-                <AlertCircle className="w-4 h-4 text-[#F59E0B] shrink-0 mt-0.5" />
-                <p className="text-[#94a3b8] text-xs">Nihai karar klinik ekibine aittir. AI asistan destek sağlar.</p>
+              <div className="mt-4 flex items-start gap-2.5 p-3 rounded-xl" style={{ background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.15)" }}>
+                <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#FCD34D" }} />
+                <p className="text-xs leading-relaxed" style={{ color: "#94A3B8" }}>Nihai karar klinik ekibine aittir. AI asistan destek sağlar, karar vermez.</p>
               </div>
-            </div>
 
-            {/* Glow effect */}
-            <div className="absolute -inset-4 bg-[#2563EB]/5 rounded-3xl blur-2xl -z-10" />
+              {/* Floating badge */}
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-4 -right-4 px-3 py-1.5 rounded-full text-xs font-semibold border"
+                style={{ background: "rgba(13,148,136,0.15)", borderColor: "rgba(45,212,191,0.3)", color: "#2DD4BF", backdropFilter: "blur(12px)" }}
+              >
+                ✓ Analiz Tamamlandı
+              </motion.div>
+            </div>
           </motion.div>
 
           {/* Right: Text */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#38BDF8]/10 border border-[#38BDF8]/20 text-[#38BDF8] text-xs font-medium mb-5">
-              <Bot className="w-3.5 h-3.5" /> AI destekli
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              AI destekli klinik değerlendirme.
-            </h2>
-            <p className="text-[#64748B] leading-relaxed mb-8">
-              Muayene formundaki bilgileri analiz ederek klinik özet, takip notu ve tedavi önerisi taslağı oluşturur. Ekip daha düzenli kayıt tutar, hasta süreci daha profesyonel yönetilir.
+          <div className="gsap-reveal-right">
+            <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-5"
+              style={{ background: "rgba(59,130,246,0.12)", color: "#93C5FD", border: "1px solid rgba(59,130,246,0.2)" }}>
+              AI Destekli
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">AI destekli klinik değerlendirme.</h2>
+            <p className="leading-relaxed mb-8 text-base" style={{ color: "#94A3B8" }}>
+              Muayene formundaki bilgileri analiz ederek klinik özet, takip notu ve tedavi önerisi taslağı oluşturur. Ekibiniz daha düzenli kayıt tutar.
             </p>
 
             <ul className="space-y-3 mb-8">
-              {features.map((f, i) => (
-                <motion.li
-                  key={f}
-                  initial={{ opacity: 0, x: 16 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}
-                  className="flex items-center gap-3 text-sm text-[#94a3b8]"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] shrink-0" />
+              {features.map((f) => (
+                <li key={f} className="flex items-center gap-3 text-sm" style={{ color: "#CBD5E1" }}>
+                  <span className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs"
+                    style={{ background: "rgba(45,212,191,0.15)", color: "#2DD4BF" }}>✓</span>
                   {f}
-                </motion.li>
+                </li>
               ))}
             </ul>
 
-            <Link
-              href={`/${locale}/ai-klinik-asistani`}
-              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-[#2563EB] hover:bg-[#1d4ed8] rounded-xl transition-colors"
-            >
+            <Link href={`/${locale}/ai-klinik-asistani`}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all hover:-translate-y-0.5"
+              style={{ background: "rgba(37,99,235,0.15)", color: "#93C5FD", border: "1px solid rgba(59,130,246,0.25)" }}>
               AI Klinik Asistanı İncele →
             </Link>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
