@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "product": "Ürün",
+    "solutions": "Çözümler",
+    "ai": "AI",
+    "services": "Hizmetler",
+    "pricing": "Fiyatlandırma",
+    "blog": "Blog",
+    "contact": "İletişim",
+    "login": "Giriş Yap",
+    "trialCta": "15 Gün Ücretsiz Dene",
+    "demoCta": "Demo Başlat"
+  },
+  "hero": {
+    "title": "İşletmenizi yazılım, AI ve dijital büyüme sistemiyle yönetin.",
+    "subtitle": "Dijivexa; klinik ve güzellik merkezleri için randevu, hasta takibi, kasa, stok, operasyon ve WhatsApp iletişimini tek platformda birleştirir.",
+    "primaryCta": "15 Gün Ücretsiz Dene",
+    "secondaryCta": "Canlı Demo Talep Et",
+    "trust1": "Kurulum desteği dahil",
+    "trust2": "Kredi kartı gerekmez",
+    "trust3": "15 gün ücretsiz demo",
+    "trust4": "Çok dilli kullanım"
+  },
+  "demo": {
+    "title": "15 gün ücretsiz demo hesabınızı oluşturun.",
+    "subtitle": "Kredi kartı gerekmez. Demo hesabınız otomatik açılır.",
+    "submitCta": "Ücretsiz Demo Başlat"
+  },
+  "footer": {
+    "tagline": "İşletmeler için akıllı dijital sistemler.",
+    "rights": "Tüm hakları saklıdır."
+  }
+}

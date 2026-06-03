@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "product": "Product",
+    "solutions": "Solutions",
+    "ai": "AI",
+    "services": "Services",
+    "pricing": "Pricing",
+    "blog": "Blog",
+    "contact": "Contact",
+    "login": "Login",
+    "trialCta": "Try Free for 15 Days",
+    "demoCta": "Start Demo"
+  },
+  "hero": {
+    "title": "Manage your business with software, AI and digital growth systems.",
+    "subtitle": "Dijivexa brings together appointment scheduling, patient tracking, cashier, inventory, operations and WhatsApp communication in one platform.",
+    "primaryCta": "Try Free for 15 Days",
+    "secondaryCta": "Request Live Demo",
+    "trust1": "Setup support included",
+    "trust2": "No credit card required",
+    "trust3": "15-day free demo",
+    "trust4": "Multi-language support"
+  },
+  "demo": {
+    "title": "Create your 15-day free demo account.",
+    "subtitle": "No credit card required. Your demo account opens automatically.",
+    "submitCta": "Start Free Demo"
+  },
+  "footer": {
+    "tagline": "Smart digital systems for businesses.",
+    "rights": "All rights reserved."
+  }
+}
