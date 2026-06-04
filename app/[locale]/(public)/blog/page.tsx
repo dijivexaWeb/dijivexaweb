@@ -8,9 +8,9 @@ interface BlogPost {
   title: string;
   slug: string;
   excerpt: string | null;
-  cover_image_url: string | null;
+  cover_image: string | null;
   published_at: string | null;
-  category: string | null;
+  category_id: string | null;
 }
 
 function formatDate(dateStr: string | null) {
@@ -27,7 +27,7 @@ export default async function BlogPage({
   const supabase = await createClient();
   const { data: posts } = await supabase
     .from("site_blog_posts")
-    .select("id, title, slug, excerpt, cover_image_url, published_at, category")
+    .select("id, title, slug, excerpt, cover_image, published_at, category_id")
     .eq("is_published", true)
     .order("published_at", { ascending: false })
     .limit(24);
@@ -70,9 +70,9 @@ export default async function BlogPage({
                   {/* Cover */}
                   <div className="h-48 relative overflow-hidden"
                     style={{ background: "linear-gradient(135deg, #0F2553, #1A3A6B)" }}>
-                    {post.cover_image_url ? (
+                    {post.cover_image ? (
                       <img
-                        src={post.cover_image_url}
+                        src={post.cover_image}
                         alt={post.title}
                         className="w-full h-full object-cover"
                       />
@@ -81,10 +81,10 @@ export default async function BlogPage({
                         <div className="text-4xl opacity-20">📝</div>
                       </div>
                     )}
-                    {post.category && (
+                    {post.category_id && (
                       <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-semibold"
                         style={{ background: "rgba(37,99,235,0.85)", color: "white", backdropFilter: "blur(8px)" }}>
-                        {post.category}
+                        {post.category_id}
                       </span>
                     )}
                   </div>
