@@ -46,20 +46,6 @@ INSERT INTO site_settings (key, value) VALUES
 ]'::jsonb)
 ON CONFLICT (key) DO NOTHING;
 
-INSERT INTO site_settings (key, value) VALUES
-('homepage_problems', '{
-  "heading": "Hasta, randevu, kasa ve stok takibi dağınık mı?",
-  "subheading": "Pek çok klinik bunları hâlâ çözemiyor. Dijivexa tüm bunları tek sistemde toplar.",
-  "cta": "✓ Dijivexa Clinic tüm klinik sürecini dijital ortamda toplar.",
-  "items": [
-    "Hasta bilgileri WhatsApp'\''ta dağınık kalıyor.",
-    "Randevular karışıyor, çift kayıt oluşuyor.",
-    "Ödemeler Excel veya kağıtta takip ediliyor.",
-    "Seanslar ve kontrol tarihleri unutuluyor.",
-    "Stok tüketimi takip edilemiyor.",
-    "Personel verimliliği ölçülemiyor.",
-    "Reklamdan gelen leadler kaybolup gidiyor.",
-    "Operasyon belgeleri kağıtta kalıyor."
-  ]
-}'::jsonb)
-ON CONFLICT (key) DO NOTHING;
+INSERT INTO site_settings (key, value)
+SELECT 'homepage_problems', $json${"heading":"Hasta, randevu, kasa ve stok takibi dağınık mı?","subheading":"Pek çok klinik bunları hâlâ çözemiyor. Dijivexa tüm bunları tek sistemde toplar.","cta":"✓ Dijivexa Clinic tüm klinik sürecini dijital ortamda toplar.","items":["Hasta bilgileri WhatsApp'ta dağınık kalıyor.","Randevular karışıyor, çift kayıt oluşuyor.","Ödemeler Excel veya kağıtta takip ediliyor.","Seanslar ve kontrol tarihleri unutuluyor.","Stok tüketimi takip edilemiyor.","Personel verimliliği ölçülemiyor.","Reklamdan gelen leadler kaybolup gidiyor.","Operasyon belgeleri kağıtta kalıyor."]}$json$::jsonb
+WHERE NOT EXISTS (SELECT 1 FROM site_settings WHERE key = 'homepage_problems');

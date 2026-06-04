@@ -10,13 +10,9 @@ INSERT INTO site_testimonials (locale, name, role, company, avatar_url, content,
 ('tr', 'Dr. Zeynep Arslan', 'Trikoloji Uzmanı', 'Tricho Center — Bursa', 'ZA', 'Trikoloji formu ve saç analizi takip sistemi gerçekten ekibimiz için hazırlanmış gibi. Norwood evreleme, trikoskopi notları, PRP takibi — her şey düzenli ve erişilebilir.', 5, 4, true),
 ('tr', 'Serkan Doğan', 'Operasyon Müdürü', 'Dermis Clinic — Antalya', 'SD', 'Çok şubeli yapıyı Dijivexa ile yönetmek çok kolaylaştı. İki şubemizin stoklarını, randevularını ve kasasını tek ekrandan takip ediyoruz. Raporlama özelliği de harika.', 5, 5, true),
 ('tr', 'Fatma Öztürk', 'Lazer Uzmanı', 'Lazer Pro Merkezi — İstanbul', 'FO', 'Lazer epilasyon seans takibi için mükemmel. Bölge bazlı seans planı, cilt tipi kaydı, otomatik randevu hatırlatmaları — sistemi öğrenmesi çok kolay, ekibim hemen adapte oldu.', 5, 6, true),
-
--- İngilizce referanslar
 ('en', 'Dr. Sarah Mitchell', 'Clinic Director', 'AestheMed Clinic — London', 'SM', 'Dijivexa transformed how we manage our clinic. The AI assistant, appointment system, and WhatsApp integration work seamlessly together. Our team productivity increased significantly.', 5, 1, true),
-('en', 'James Kowalski', 'Operations Manager', 'Elite Hair Center — Warsaw', 'JK', 'We manage two branches with Dijivexa. Real-time stock tracking, graft operation forms, and patient follow-ups are all in one place. Excellent software for hair transplant clinics.', 5, 2, true);
-
--- Logo bilgileri (site_settings üzerinden yönetilecek)
--- Şimdilik site_testimonials company alanından okunuyor
+('en', 'James Kowalski', 'Operations Manager', 'Elite Hair Center — Warsaw', 'JK', 'We manage two branches with Dijivexa. Real-time stock tracking, graft operation forms, and patient follow-ups are all in one place. Excellent software for hair transplant clinics.', 5, 2, true)
+ON CONFLICT DO NOTHING;
 
 -- SSS — Genel sorular
 INSERT INTO site_faqs (locale, question, answer, category, page_slug, sort_order, is_published) VALUES
@@ -28,14 +24,11 @@ INSERT INTO site_faqs (locale, question, answer, category, page_slug, sort_order
 ('tr', 'Verilerim güvenli mi?', 'Evet. Supabase altyapısı üzerinde Row Level Security ile klinik bazlı veri izolasyonu, günlük otomatik yedekleme, audit log ve güvenli JWT oturum yönetimi uygulanır.', 'security', 'home', 6, true),
 ('tr', 'Kurulum ve onboarding desteği var mı?', 'Evet. Demo hesabı açıldıktan sonra uzman ekibimiz kurulum, veri aktarımı ve ekip eğitimi konularında size destek sağlar. İlk gün işe başlayabilirsiniz.', 'general', 'home', 7, true),
 ('tr', 'Kaç şube ile kullanabilirsiniz?', 'Planınıza göre 1 şubeden sınırsız şubeye kadar kullanabilirsiniz. Her şube için ayrı kullanıcılar, roller ve erişim yetkileri tanımlanabilir.', 'software', 'home', 8, true),
-
--- Fiyatlandırma SSS
 ('tr', 'Fiyatlandırma nasıl çalışıyor?', 'Dijivexa Clinic tek bir plan olarak sunulur. Fiyat; şube sayısı, kullanıcı sayısı ve ek entegrasyon ihtiyaçlarına göre belirlenir. Demo sonrası özel fiyat teklifi alabilirsiniz.', 'pricing', 'fiyatlandirma', 1, true),
 ('tr', 'Aylık mı yoksa yıllık mı ödeme?', 'Her iki seçenek de mevcuttur. Yıllık planlar daha avantajlı fiyatlarla sunulmaktadır. Ödeme detayları için ekibimizle görüşebilirsiniz.', 'pricing', 'fiyatlandirma', 2, true),
-
--- Saç ekimi SSS
 ('tr', 'Saç ekimi operasyon modülü ne içeriyor?', 'Greft sayısı ve dağılımı, teknik seçimi (FUE/DHI), ekip görev ataması, anestezi ve ilaç kayıtları, vital takip, taburcu checklist ve 12 aylık otomatik takip planı içerir.', 'software', 'sac-ekimi-merkezleri', 1, true),
-('tr', 'Öncesi/sonrası fotoğraflar nasıl yönetilir?', 'Her hasta dosyasına tarih damgalı öncesi/sonrası fotoğraflar yüklenebilir. Fotoğraflar güvenli bulut depolamada saklanır ve karşılaştırma görünümüyle incelenebilir.', 'software', 'sac-ekimi-merkezleri', 2, true);
+('tr', 'Öncesi/sonrası fotoğraflar nasıl yönetilir?', 'Her hasta dosyasına tarih damgalı öncesi/sonrası fotoğraflar yüklenebilir. Fotoğraflar güvenli bulut depolamada saklanır ve karşılaştırma görünümüyle incelenebilir.', 'software', 'sac-ekimi-merkezleri', 2, true)
+ON CONFLICT DO NOTHING;
 
 -- Dijivexa Clinic Modülleri
 INSERT INTO site_modules (slug, locale, name, short_description, long_description, icon, feature_list, cta_text, cta_href, sort_order, is_published) VALUES
@@ -48,7 +41,8 @@ INSERT INTO site_modules (slug, locale, name, short_description, long_descriptio
 ('whatsapp-bildirimler', 'tr', 'WhatsApp Bildirimleri', 'Otomatik randevu hatırlatma ve kampanya mesajları', 'Meta WhatsApp Cloud API entegrasyonu ile randevu hatırlatma, kontrol mesajları, kampanya bildirimleri ve yorum davetlerini otomatik gönderin. Toplu mesaj ve şablon yönetimi dahildir.', '💬', '["Randevu hatırlatma", "10. gün kontrol mesajı", "Kampanya bildirimi", "Yorum daveti", "Toplu mesaj", "Şablon yönetimi", "Mesaj logları"]', 'WhatsApp Sistemini İncele', '/tr/whatsapp-takip', 7, true),
 ('seans-takibi', 'tr', 'Seans Takibi', 'PRP, lazer ve mezoterapi planları', 'PRP, lazer epilasyon, mezoterapi ve karışık tedavi planlarını oluşturun. Otomatik randevu oluşturma ve WhatsApp bildirimleri ile seans takibini eksiksiz yapın.', '📊', '["PRP planı", "Lazer epilasyon planı", "Mezoterapi planı", "Saç ekimi takip planı", "Otomatik randevu", "WhatsApp bildirimi"]', 'Seans Modülünü İncele', '/tr/ozellikler', 8, true),
 ('raporlama', 'tr', 'Raporlama', 'Gelir, doluluk ve personel performans analizleri', 'Günlük randevu raporu, aylık gelir analizi, gider raporu, stok raporu, personel performansı ve klinik doluluk oranlarını anlık takip edin.', '📈', '["Günlük randevu raporu", "Aylık gelir analizi", "Gider raporu", "Stok raporu", "Personel performansı", "Klinik doluluk oranı"]', 'Raporlamayı İncele', '/tr/ozellikler', 9, true),
-('cok-subeli', 'tr', 'Çok Şubeli Yapı', 'Birden fazla şubeyi tek panelden yönetin', 'Tüm şubelerinizi tek admin panelinden yönetin. Her şube için ayrı stok, personel, randevu ve raporlama. Merkezi bakış açısıyla tüm işletmenizi anlık izleyin.', '🏢', '["Merkezi yönetim", "Şube bazlı stok", "Şube bazlı raporlama", "Şubeler arası transfer", "Ayrı kullanıcı yönetimi", "Konsolidasyon raporu"]', 'Çok Şubeli Yapıyı İncele', '/tr/dijivexa-clinic', 10, true);
+('cok-subeli', 'tr', 'Çok Şubeli Yapı', 'Birden fazla şubeyi tek panelden yönetin', 'Tüm şubelerinizi tek admin panelinden yönetin. Her şube için ayrı stok, personel, randevu ve raporlama. Merkezi bakış açısıyla tüm işletmenizi anlık izleyin.', '🏢', '["Merkezi yönetim", "Şube bazlı stok", "Şube bazlı raporlama", "Şubeler arası transfer", "Ayrı kullanıcı yönetimi", "Konsolidasyon raporu"]', 'Çok Şubeli Yapıyı İncele', '/tr/dijivexa-clinic', 10, true)
+ON CONFLICT (slug, locale) DO NOTHING;
 
 -- Dijivexa Hizmetleri
 INSERT INTO site_services (slug, locale, name, tagline, short_description, feature_list, cta_text, cta_href, sort_order, is_published) VALUES
@@ -57,7 +51,8 @@ INSERT INTO site_services (slug, locale, name, tagline, short_description, featu
 ('dijivexa-web', 'tr', 'Dijivexa Web', 'İşletmeniz için satış odaklı web sitesi.', 'Çok dilli, SEO uyumlu, randevu formlu web sitesi ve landing page geliştirme.', '["Çok dilli web sitesi", "SEO altyapısı", "Randevu formu", "WhatsApp butonu", "Landing page", "CRM bağlantısı"]', 'Web Sitesi Teklifi Al', '/tr/dijivexa-web', 3, true),
 ('dijivexa-mobile', 'tr', 'Dijivexa Mobile', 'İşletmenize özel mobil uygulama.', 'iOS ve Android için hasta, personel ve yönetici uygulamaları geliştirme.', '["Hasta uygulaması", "Personel uygulaması", "Online randevu", "Push bildirim", "Takip ekranları", "App Store & Play Store"]', 'Mobil Uygulama Görüşelim', '/tr/dijivexa-mobile', 4, true),
 ('dijivexa-studio', 'tr', 'Dijivexa Studio', 'İşletmenize özel yazılım çözümleri.', 'CRM, stok sistemi, randevu, sipariş takip ve otomasyon projeleri.', '["CRM sistemi", "Stok yönetimi", "Randevu sistemi", "WhatsApp otomasyonu", "Yönetim paneli", "API entegrasyonları"]', 'Özel Yazılım Talebi', '/tr/dijivexa-studio', 5, true),
-('dijivexa-ai', 'tr', 'Dijivexa AI', 'AI analiz, chatbot ve otomasyon çözümleri.', 'İşletmeniz için yapay zeka tabanlı analiz, otomasyon ve chatbot sistemleri.', '["Klinik AI değerlendirme", "Form analizleri", "WhatsApp AI asistan", "Doküman analizi", "İş akışı otomasyonu", "Özel AI entegrasyonu"]', 'AI Çözümü Görüşelim', '/tr/dijivexa-ai', 6, true);
+('dijivexa-ai', 'tr', 'Dijivexa AI', 'AI analiz, chatbot ve otomasyon çözümleri.', 'İşletmeniz için yapay zeka tabanlı analiz, otomasyon ve chatbot sistemleri.', '["Klinik AI değerlendirme", "Form analizleri", "WhatsApp AI asistan", "Doküman analizi", "İş akışı otomasyonu", "Özel AI entegrasyonu"]', 'AI Çözümü Görüşelim', '/tr/dijivexa-ai', 6, true)
+ON CONFLICT (slug, locale) DO NOTHING;
 
 -- Site genel ayarları
 INSERT INTO site_settings (key, value) VALUES
