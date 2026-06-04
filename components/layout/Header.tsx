@@ -17,12 +17,12 @@ const locales = [
 
 const productItems = [
   { label: "Dijivexa Clinic", href: "/dijivexa-clinic", desc: "Klinik yönetim yazılımı" },
-  { label: "Hasta Yönetimi", href: "/dijivexa-clinic#hasta", desc: "Dijital hasta dosyası" },
-  { label: "Randevu Takvimi", href: "/dijivexa-clinic#randevu", desc: "Akıllı takvim" },
+  { label: "Hasta & Randevu", href: "/dijivexa-clinic", desc: "Dijital hasta dosyası ve takvim" },
   { label: "Kasa & Stok", href: "/kasa-stok-yonetimi", desc: "Finansal takip" },
   { label: "Operasyon Modülü", href: "/operasyon-yonetimi", desc: "Saç ekimi operasyonu" },
   { label: "WhatsApp Takip", href: "/whatsapp-takip", desc: "Otomatik bildirimler" },
   { label: "AI Klinik Asistan", href: "/ai-klinik-asistani", desc: "Yapay zeka desteği" },
+  { label: "Tüm Özellikler", href: "/ozellikler", desc: "16+ modül ve özellik" },
 ];
 
 const solutionItems = [
