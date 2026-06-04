@@ -28,11 +28,11 @@ export default async function HomePage({
       <AISection locale={locale} />
       <WhatsAppSection locale={locale} />
       <StatsSection />
-      <TestimonialsSection />
+      <TestimonialsSection locale={locale} />
       <ServicesGridSection locale={locale} />
       <DemoProcessSection locale={locale} />
       <SecuritySection />
-      <FAQSection />
+      <FAQSection locale={locale} pageSlug="home" />
       <FinalCTASection locale={locale} />
     </>
   );

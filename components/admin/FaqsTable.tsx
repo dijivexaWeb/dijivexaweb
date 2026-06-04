@@ -11,15 +11,20 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 
-interface Faq { id: string; question: string; answer: string; category: string; locale: string; sort_order: number; is_published: boolean; }
+interface Faq {
+  id: string; question: string; answer: string; category: string;
+  locale: string; page_slug: string; sort_order: number; is_published: boolean;
+}
 
 const categories = ["general", "demo", "software", "whatsapp", "ai", "security", "pricing"];
 const locales = ["tr", "en", "ka", "ru"];
+const EMPTY_FORM = { question: "", answer: "", category: "general", locale: "tr", page_slug: "home", sort_order: 0 };
 
 export function FaqsTable() {
   const [rows, setRows] = useState<Faq[]>([]);
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ question: "", answer: "", category: "general", locale: "tr", sort_order: 0 });
+  const [editRow, setEditRow] = useState<Faq | null>(null);
+  const [form, setForm] = useState(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
 
   async function load() {
@@ -27,14 +32,31 @@ export function FaqsTable() {
     setRows(data ?? []);
   }
 
+  function openAdd() {
+    setEditRow(null);
+    setForm(EMPTY_FORM);
+    setOpen(true);
+  }
+
+  function openEdit(row: Faq) {
+    setEditRow(row);
+    setForm({
+      question: row.question, answer: row.answer, category: row.category ?? "general",
+      locale: row.locale, page_slug: row.page_slug ?? "home", sort_order: row.sort_order,
+    });
+    setOpen(true);
+  }
+
   async function handleSave() {
     setSaving(true);
-    const { error } = await createClient().from("site_faqs").insert({ ...form, is_published: true });
+    const db = createClient();
+    const { error } = editRow
+      ? await db.from("site_faqs").update({ ...form }).eq("id", editRow.id)
+      : await db.from("site_faqs").insert({ ...form, is_published: true });
     setSaving(false);
     if (error) { toast.error("Hata: " + error.message); return; }
-    toast.success("SSS eklendi.");
+    toast.success(editRow ? "SSS güncellendi." : "SSS eklendi.");
     setOpen(false);
-    setForm({ question: "", answer: "", category: "general", locale: "tr", sort_order: 0 });
     load();
   }
 
@@ -45,6 +67,11 @@ export function FaqsTable() {
     load();
   }
 
+  async function togglePublish(row: Faq) {
+    await createClient().from("site_faqs").update({ is_published: !row.is_published }).eq("id", row.id);
+    load();
+  }
+
   useEffect(() => { load(); }, []);
 
   return (
@@ -52,15 +79,21 @@ export function FaqsTable() {
       <AdminTable
         title="SSS Listesi"
         addLabel="Yeni SSS"
-        onAdd={() => setOpen(true)}
+        onAdd={openAdd}
         columns={[
-          { key: "question", label: "Soru", render: (r) => <span className="line-clamp-1">{r.question}</span> },
+          { key: "question", label: "Soru", render: (r) => <span className="line-clamp-1 max-w-sm">{r.question}</span> },
           { key: "category", label: "Kategori" },
+          { key: "page_slug", label: "Sayfa" },
           { key: "locale", label: "Dil" },
           { key: "sort_order", label: "Sıra" },
-          { key: "is_published", label: "Durum", render: (r) => <StatusBadge value={r.is_published} /> },
+          { key: "is_published", label: "Durum", render: (r) => (
+            <button onClick={() => togglePublish(r)}>
+              <StatusBadge value={r.is_published} />
+            </button>
+          )},
         ]}
         rows={rows}
+        onEdit={openEdit}
         onDelete={handleDelete}
         emptyText="Henüz SSS yok."
       />
@@ -68,16 +101,14 @@ export function FaqsTable() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="bg-[#0B172A] border-[#1e2d45] text-white max-w-lg">
           <DialogHeader>
-            <DialogTitle className="text-white">Yeni SSS</DialogTitle>
+            <DialogTitle className="text-white">{editRow ? "SSS Düzenle" : "Yeni SSS"}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <Label className="text-[#94a3b8]">Dil</Label>
                 <Select value={form.locale} onValueChange={(v) => setForm((f) => ({ ...f, locale: v }))}>
-                  <SelectTrigger className="bg-[#07111F] border-[#1e2d45] text-white">
-                    <SelectValue />
-                  </SelectTrigger>
+                  <SelectTrigger className="bg-[#07111F] border-[#1e2d45] text-white"><SelectValue /></SelectTrigger>
                   <SelectContent className="bg-[#0B172A] border-[#1e2d45]">
                     {locales.map((l) => <SelectItem key={l} value={l} className="text-white">{l.toUpperCase()}</SelectItem>)}
                   </SelectContent>
@@ -86,29 +117,38 @@ export function FaqsTable() {
               <div className="space-y-1">
                 <Label className="text-[#94a3b8]">Kategori</Label>
                 <Select value={form.category} onValueChange={(v) => setForm((f) => ({ ...f, category: v }))}>
-                  <SelectTrigger className="bg-[#07111F] border-[#1e2d45] text-white">
-                    <SelectValue />
-                  </SelectTrigger>
+                  <SelectTrigger className="bg-[#07111F] border-[#1e2d45] text-white"><SelectValue /></SelectTrigger>
                   <SelectContent className="bg-[#0B172A] border-[#1e2d45]">
                     {categories.map((c) => <SelectItem key={c} value={c} className="text-white">{c}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
             </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label className="text-[#94a3b8]">Sayfa (page_slug)</Label>
+                <Input value={form.page_slug} onChange={(e) => setForm((f) => ({ ...f, page_slug: e.target.value }))}
+                  className="bg-[#07111F] border-[#1e2d45] text-white" placeholder="home" />
+              </div>
+              <div className="space-y-1">
+                <Label className="text-[#94a3b8]">Sıra</Label>
+                <Input type="number" value={form.sort_order} onChange={(e) => setForm((f) => ({ ...f, sort_order: Number(e.target.value) }))}
+                  className="bg-[#07111F] border-[#1e2d45] text-white" />
+              </div>
+            </div>
             <div className="space-y-1">
               <Label className="text-[#94a3b8]">Soru</Label>
-              <Input value={form.question} onChange={(e) => setForm((f) => ({ ...f, question: e.target.value }))} className="bg-[#07111F] border-[#1e2d45] text-white" />
+              <Input value={form.question} onChange={(e) => setForm((f) => ({ ...f, question: e.target.value }))}
+                className="bg-[#07111F] border-[#1e2d45] text-white" />
             </div>
             <div className="space-y-1">
               <Label className="text-[#94a3b8]">Cevap</Label>
-              <Textarea value={form.answer} onChange={(e) => setForm((f) => ({ ...f, answer: e.target.value }))} rows={4} className="bg-[#07111F] border-[#1e2d45] text-white resize-none" />
+              <Textarea value={form.answer} onChange={(e) => setForm((f) => ({ ...f, answer: e.target.value }))}
+                rows={4} className="bg-[#07111F] border-[#1e2d45] text-white resize-none" />
             </div>
-            <div className="space-y-1">
-              <Label className="text-[#94a3b8]">Sıra</Label>
-              <Input type="number" value={form.sort_order} onChange={(e) => setForm((f) => ({ ...f, sort_order: Number(e.target.value) }))} className="bg-[#07111F] border-[#1e2d45] text-white" />
-            </div>
-            <Button onClick={handleSave} disabled={saving} className="w-full bg-[#2563EB] hover:bg-[#1d4ed8] text-white">
-              {saving ? "Kaydediliyor..." : "Kaydet"}
+            <Button onClick={handleSave} disabled={saving || !form.question || !form.answer}
+              className="w-full bg-[#2563EB] hover:bg-[#1d4ed8] text-white">
+              {saving ? "Kaydediliyor..." : editRow ? "Güncelle" : "Kaydet"}
             </Button>
           </div>
         </DialogContent>

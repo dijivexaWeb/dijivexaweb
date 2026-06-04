@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import {
   LayoutDashboard, Settings, Menu, FileText, Image, Box, Briefcase,
   HelpCircle, BookOpen, Search, ClipboardList, Users, Building2,
-  CreditCard, ChevronDown, LogOut, Tag,
+  CreditCard, LogOut, Tag, Home,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
@@ -25,6 +25,7 @@ const navGroups: NavGroup[] = [
   {
     label: "Site Yönetimi",
     items: [
+      { href: "/tr/admin/homepage", label: "Anasayfa İçerik", icon: Home },
       { href: "/tr/admin/settings", label: "Site Ayarları", icon: Settings },
       { href: "/tr/admin/menus", label: "Menüler", icon: Menu },
       { href: "/tr/admin/pages", label: "Sayfalar", icon: FileText },

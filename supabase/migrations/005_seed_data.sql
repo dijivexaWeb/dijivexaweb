@@ -1,0 +1,71 @@
+-- ============================================================
+-- 005_seed_data.sql — Başlangıç İçerikleri
+-- ============================================================
+
+-- Referanslar / Testimonials
+INSERT INTO site_testimonials (locale, name, role, company, avatar_url, content, rating, sort_order, is_published) VALUES
+('tr', 'Dr. Murat Şahin', 'Kurucu & Klinik Direktörü', 'Hair Expert Merkezi — İstanbul', 'MS', 'Dijivexa Clinic ile saç ekimi operasyon süreçlerimizi tamamen dijitalleştirdik. Greft takibi, ekip görevleri, taburcu checklist — her şey tek panelde. Hasta memnuniyetimiz gözle görülür arttı.', 5, 1, true),
+('tr', 'Ayşe Korkmaz', 'Klinik Müdürü', 'Estetika Plus — Ankara', 'AK', 'WhatsApp hatırlatma sistemi hayat kurtardı. Artık randevu kaçırmalar sıfıra indi. AI değerlendirme özelliği muayene süremizi ciddi ölçüde kısalttı. Kesinlikle tavsiye ediyorum.', 5, 2, true),
+('tr', 'Erkan Yıldız', 'İşletme Sahibi', 'Nova Beauty Center — İzmir', 'EY', 'Kasa ve stok yönetimi artık çok kolay. Hizmete bağlı otomatik stok düşümü özelliği ile stoğumuzun nereye gittiğini anlık görüyoruz. Taksit takibi de mükemmel çalışıyor.', 5, 3, true),
+('tr', 'Dr. Zeynep Arslan', 'Trikoloji Uzmanı', 'Tricho Center — Bursa', 'ZA', 'Trikoloji formu ve saç analizi takip sistemi gerçekten ekibimiz için hazırlanmış gibi. Norwood evreleme, trikoskopi notları, PRP takibi — her şey düzenli ve erişilebilir.', 5, 4, true),
+('tr', 'Serkan Doğan', 'Operasyon Müdürü', 'Dermis Clinic — Antalya', 'SD', 'Çok şubeli yapıyı Dijivexa ile yönetmek çok kolaylaştı. İki şubemizin stoklarını, randevularını ve kasasını tek ekrandan takip ediyoruz. Raporlama özelliği de harika.', 5, 5, true),
+('tr', 'Fatma Öztürk', 'Lazer Uzmanı', 'Lazer Pro Merkezi — İstanbul', 'FO', 'Lazer epilasyon seans takibi için mükemmel. Bölge bazlı seans planı, cilt tipi kaydı, otomatik randevu hatırlatmaları — sistemi öğrenmesi çok kolay, ekibim hemen adapte oldu.', 5, 6, true),
+
+-- İngilizce referanslar
+('en', 'Dr. Sarah Mitchell', 'Clinic Director', 'AestheMed Clinic — London', 'SM', 'Dijivexa transformed how we manage our clinic. The AI assistant, appointment system, and WhatsApp integration work seamlessly together. Our team productivity increased significantly.', 5, 1, true),
+('en', 'James Kowalski', 'Operations Manager', 'Elite Hair Center — Warsaw', 'JK', 'We manage two branches with Dijivexa. Real-time stock tracking, graft operation forms, and patient follow-ups are all in one place. Excellent software for hair transplant clinics.', 5, 2, true);
+
+-- Logo bilgileri (site_settings üzerinden yönetilecek)
+-- Şimdilik site_testimonials company alanından okunuyor
+
+-- SSS — Genel sorular
+INSERT INTO site_faqs (locale, question, answer, category, page_slug, sort_order, is_published) VALUES
+('tr', '15 günlük demo nasıl çalışır?', 'Formu doldurun, demo hesabınız otomatik açılır. Kredi kartı gerekmez. 15 gün boyunca tüm modülleri gerçek verilerle test edebilirsiniz. Demo süreniz dolmadan ekibimiz sizinle iletişime geçer.', 'demo', 'home', 1, true),
+('tr', 'Kredi kartı bilgisi gerekiyor mu?', 'Hayır. Demo sürecinde herhangi bir ödeme bilgisi, kredi kartı veya abonelik bilgisi talep edilmez. Tamamen ücretsiz ve taahhütsüz demo kullanabilirsiniz.', 'demo', 'home', 2, true),
+('tr', 'WhatsApp mesajları otomatik gidiyor mu?', 'Evet. Meta WhatsApp Business API entegrasyonu ile randevu hatırlatma (24 saat önce), kontrol mesajları, kampanya bildirimleri ve yorum davetleri otomatik olarak gönderilir.', 'whatsapp', 'home', 3, true),
+('tr', 'AI değerlendirme özelliği ne işe yarar?', 'Muayene formundaki verileri analiz ederek klinik özet, tedavi önerisi taslağı ve risk notları oluşturur. Nihai karar her zaman klinik ekibine aittir. AI yalnızca destek sağlar.', 'ai', 'home', 4, true),
+('tr', 'Çok şubeli kullanım mümkün mü?', 'Evet. Dijivexa Clinic çok şubeli yapıyı tam olarak destekler. Her şube için ayrı stok takibi, personel yönetimi, randevu takvimi ve raporlama yapılabilir.', 'software', 'home', 5, true),
+('tr', 'Verilerim güvenli mi?', 'Evet. Supabase altyapısı üzerinde Row Level Security ile klinik bazlı veri izolasyonu, günlük otomatik yedekleme, audit log ve güvenli JWT oturum yönetimi uygulanır.', 'security', 'home', 6, true),
+('tr', 'Kurulum ve onboarding desteği var mı?', 'Evet. Demo hesabı açıldıktan sonra uzman ekibimiz kurulum, veri aktarımı ve ekip eğitimi konularında size destek sağlar. İlk gün işe başlayabilirsiniz.', 'general', 'home', 7, true),
+('tr', 'Kaç şube ile kullanabilirsiniz?', 'Planınıza göre 1 şubeden sınırsız şubeye kadar kullanabilirsiniz. Her şube için ayrı kullanıcılar, roller ve erişim yetkileri tanımlanabilir.', 'software', 'home', 8, true),
+
+-- Fiyatlandırma SSS
+('tr', 'Fiyatlandırma nasıl çalışıyor?', 'Dijivexa Clinic tek bir plan olarak sunulur. Fiyat; şube sayısı, kullanıcı sayısı ve ek entegrasyon ihtiyaçlarına göre belirlenir. Demo sonrası özel fiyat teklifi alabilirsiniz.', 'pricing', 'fiyatlandirma', 1, true),
+('tr', 'Aylık mı yoksa yıllık mı ödeme?', 'Her iki seçenek de mevcuttur. Yıllık planlar daha avantajlı fiyatlarla sunulmaktadır. Ödeme detayları için ekibimizle görüşebilirsiniz.', 'pricing', 'fiyatlandirma', 2, true),
+
+-- Saç ekimi SSS
+('tr', 'Saç ekimi operasyon modülü ne içeriyor?', 'Greft sayısı ve dağılımı, teknik seçimi (FUE/DHI), ekip görev ataması, anestezi ve ilaç kayıtları, vital takip, taburcu checklist ve 12 aylık otomatik takip planı içerir.', 'software', 'sac-ekimi-merkezleri', 1, true),
+('tr', 'Öncesi/sonrası fotoğraflar nasıl yönetilir?', 'Her hasta dosyasına tarih damgalı öncesi/sonrası fotoğraflar yüklenebilir. Fotoğraflar güvenli bulut depolamada saklanır ve karşılaştırma görünümüyle incelenebilir.', 'software', 'sac-ekimi-merkezleri', 2, true);
+
+-- Dijivexa Clinic Modülleri
+INSERT INTO site_modules (slug, locale, name, short_description, long_description, icon, feature_list, cta_text, cta_href, sort_order, is_published) VALUES
+('hasta-yonetimi', 'tr', 'Hasta Yönetimi', 'Dijital hasta dosyası, fotoğraf arşivi ve geçmiş işlemler', 'Tüm hasta bilgilerini, muayene geçmişini, fotoğrafları ve iletişim bilgilerini tek dijital dosyada toplayın. Mükerrer kayıt kontrolü, risk bilgileri ve arşiv özelliği ile ekibiniz her hasta hakkında anlık bilgiye sahip olur.', '👤', '["Dijital hasta dosyası", "Fotoğraf arşivi", "Muayene geçmişi", "Risk bilgileri", "Mükerrer kayıt kontrolü", "Arşivleme"]', 'Hasta Yönetimini İncele', '/tr/ozellikler', 1, true),
+('randevu-takvimi', 'tr', 'Randevu Takvimi', 'Günlük/haftalık takvim, doktor bazlı planlama', 'Doktor bazlı çalışma planı, boş saat kontrolü, kontrol randevusu oluşturma ve personel ataması ile randevu yönetimini eksiksiz yapın. Çakışma uyarısı ve otomatik hatırlatma desteği vardır.', '📅', '["Günlük/haftalık/aylık takvim", "Doktor bazlı planlama", "Boş saat kontrolü", "Kontrol randevusu", "Personel ataması", "Otomatik hatırlatma"]', 'Randevu Sistemini İncele', '/tr/ozellikler', 2, true),
+('operasyon-modulu', 'tr', 'Operasyon Modülü', 'Saç ekimi greft takibi, ekip ve taburcu yönetimi', 'Saç ekimi operasyonlarını baştan sona dijital ortamda yönetin. Greft sayısı, teknik seçimi, ekip görevleri, anestezi kayıtları, vital takip ve taburcu checklist hepsi bir arada.', '🔬', '["Greft dağılımı", "FUE/DHI teknik seçimi", "Ekip görev ataması", "Anestezi ve ilaç kaydı", "Vital takip", "Taburcu checklist", "12 aylık takip planı"]', 'Operasyon Modülünü İncele', '/tr/sac-ekimi-merkezleri', 3, true),
+('ai-klinik-asistan', 'tr', 'AI Klinik Asistan', 'Muayene özeti ve tedavi önerisi taslağı', 'Muayene formundaki verileri yapay zeka ile analiz ederek klinik özet, risk bilgileri ve tedavi önerisi taslağı oluşturur. Gemini Pro destekli, kliniğe özel API key ile çalışır.', '🤖', '["Muayene özetini oluşturur", "Risk bilgilerini görünür yapar", "Tedavi önerisi taslağı", "Doktor notlarını düzenler", "Kliniğe özel API key", "Kullanım logları"]', 'AI Asistanı İncele', '/tr/ai-klinik-asistani', 4, true),
+('kasa-odeme', 'tr', 'Kasa & Ödeme', 'Tahsilat, taksit, kapora ve gider yönetimi', 'Hasta tahsilatı, taksit planları, kapora takibi, tedarikçi borçları, kasa transferleri ve gider kayıtları ile finansal yönetiminizi eksiksiz yapın. Aylık raporlar ve bakiye takibi dahildir.', '💰', '["Hasta tahsilatı", "Taksit takibi", "Kapora yönetimi", "Tedarikçi borçları", "Kasa transferi", "Gider kaydı", "Aylık rapor"]', 'Kasa Modülünü İncele', '/tr/ozellikler', 5, true),
+('stok-yonetimi', 'tr', 'Stok Yönetimi', 'Otomatik stok düşümü ve kritik stok alarmı', 'Hizmet verildiğinde kullanılan ürünler stoktan otomatik düşer. Kritik stok alarmları, şubeler arası transfer, fire/iade kayıtları ve tedarikçi entegrasyonu ile stoğunuzu tam kontrol altında tutun.', '📦', '["Otomatik stok düşümü", "Kritik stok alarmı", "Şube bazlı stok", "Şubeler arası transfer", "Fire/iade kaydı", "Stok raporu"]', 'Stok Modülünü İncele', '/tr/ozellikler', 6, true),
+('whatsapp-bildirimler', 'tr', 'WhatsApp Bildirimleri', 'Otomatik randevu hatırlatma ve kampanya mesajları', 'Meta WhatsApp Cloud API entegrasyonu ile randevu hatırlatma, kontrol mesajları, kampanya bildirimleri ve yorum davetlerini otomatik gönderin. Toplu mesaj ve şablon yönetimi dahildir.', '💬', '["Randevu hatırlatma", "10. gün kontrol mesajı", "Kampanya bildirimi", "Yorum daveti", "Toplu mesaj", "Şablon yönetimi", "Mesaj logları"]', 'WhatsApp Sistemini İncele', '/tr/whatsapp-takip', 7, true),
+('seans-takibi', 'tr', 'Seans Takibi', 'PRP, lazer ve mezoterapi planları', 'PRP, lazer epilasyon, mezoterapi ve karışık tedavi planlarını oluşturun. Otomatik randevu oluşturma ve WhatsApp bildirimleri ile seans takibini eksiksiz yapın.', '📊', '["PRP planı", "Lazer epilasyon planı", "Mezoterapi planı", "Saç ekimi takip planı", "Otomatik randevu", "WhatsApp bildirimi"]', 'Seans Modülünü İncele', '/tr/ozellikler', 8, true),
+('raporlama', 'tr', 'Raporlama', 'Gelir, doluluk ve personel performans analizleri', 'Günlük randevu raporu, aylık gelir analizi, gider raporu, stok raporu, personel performansı ve klinik doluluk oranlarını anlık takip edin.', '📈', '["Günlük randevu raporu", "Aylık gelir analizi", "Gider raporu", "Stok raporu", "Personel performansı", "Klinik doluluk oranı"]', 'Raporlamayı İncele', '/tr/ozellikler', 9, true),
+('cok-subeli', 'tr', 'Çok Şubeli Yapı', 'Birden fazla şubeyi tek panelden yönetin', 'Tüm şubelerinizi tek admin panelinden yönetin. Her şube için ayrı stok, personel, randevu ve raporlama. Merkezi bakış açısıyla tüm işletmenizi anlık izleyin.', '🏢', '["Merkezi yönetim", "Şube bazlı stok", "Şube bazlı raporlama", "Şubeler arası transfer", "Ayrı kullanıcı yönetimi", "Konsolidasyon raporu"]', 'Çok Şubeli Yapıyı İncele', '/tr/dijivexa-clinic', 10, true);
+
+-- Dijivexa Hizmetleri
+INSERT INTO site_services (slug, locale, name, tagline, short_description, feature_list, cta_text, cta_href, sort_order, is_published) VALUES
+('dijivexa-clinic', 'tr', 'Dijivexa Clinic', 'Kliniğinizi tek panelden yönetin.', 'Klinik ve güzellik merkezleri için hasta, randevu, kasa, stok, operasyon ve WhatsApp takip yazılımı.', '["Hasta yönetimi", "Randevu takvimi", "Kasa & ödeme", "Stok yönetimi", "Operasyon modülü", "AI asistan", "WhatsApp bildirimleri", "Çok şubeli yapı"]', '15 Gün Ücretsiz Dene', '/tr/dijivexa-clinic', 1, true),
+('dijivexa-growth', 'tr', 'Dijivexa Growth', 'Reklamdan gelen müşteriyi satışa çevirin.', 'Sosyal medya, reklam yönetimi ve dijital büyüme çözümleri.', '["Sosyal medya içerik planı", "Meta reklam yönetimi", "Google reklam", "WhatsApp lead akışı", "Landing page", "Aylık performans raporu"]', 'Teklif Al', '/tr/dijivexa-growth', 2, true),
+('dijivexa-web', 'tr', 'Dijivexa Web', 'İşletmeniz için satış odaklı web sitesi.', 'Çok dilli, SEO uyumlu, randevu formlu web sitesi ve landing page geliştirme.', '["Çok dilli web sitesi", "SEO altyapısı", "Randevu formu", "WhatsApp butonu", "Landing page", "CRM bağlantısı"]', 'Web Sitesi Teklifi Al', '/tr/dijivexa-web', 3, true),
+('dijivexa-mobile', 'tr', 'Dijivexa Mobile', 'İşletmenize özel mobil uygulama.', 'iOS ve Android için hasta, personel ve yönetici uygulamaları geliştirme.', '["Hasta uygulaması", "Personel uygulaması", "Online randevu", "Push bildirim", "Takip ekranları", "App Store & Play Store"]', 'Mobil Uygulama Görüşelim', '/tr/dijivexa-mobile', 4, true),
+('dijivexa-studio', 'tr', 'Dijivexa Studio', 'İşletmenize özel yazılım çözümleri.', 'CRM, stok sistemi, randevu, sipariş takip ve otomasyon projeleri.', '["CRM sistemi", "Stok yönetimi", "Randevu sistemi", "WhatsApp otomasyonu", "Yönetim paneli", "API entegrasyonları"]', 'Özel Yazılım Talebi', '/tr/dijivexa-studio', 5, true),
+('dijivexa-ai', 'tr', 'Dijivexa AI', 'AI analiz, chatbot ve otomasyon çözümleri.', 'İşletmeniz için yapay zeka tabanlı analiz, otomasyon ve chatbot sistemleri.', '["Klinik AI değerlendirme", "Form analizleri", "WhatsApp AI asistan", "Doküman analizi", "İş akışı otomasyonu", "Özel AI entegrasyonu"]', 'AI Çözümü Görüşelim', '/tr/dijivexa-ai', 6, true);
+
+-- Site genel ayarları
+INSERT INTO site_settings (key, value) VALUES
+('brand_name', '"Dijivexa"'),
+('tagline', '"İşletmeler için akıllı dijital sistemler."'),
+('phone', '"+90 555 000 00 00"'),
+('whatsapp', '"+90 555 000 00 00"'),
+('email', '"info@dijivexa.com"'),
+('default_locale', '"tr"'),
+('maintenance_mode', 'false')
+ON CONFLICT (key) DO NOTHING;

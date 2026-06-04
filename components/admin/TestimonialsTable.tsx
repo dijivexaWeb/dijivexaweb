@@ -14,40 +14,56 @@ import { toast } from "sonner";
 interface Testimonial {
   id: string; name: string; role: string; company: string;
   location: string; content: string; rating: number;
-  avatar_url: string; sort_order: number; is_published: boolean;
+  avatar_url: string; sort_order: number; is_published: boolean; locale: string;
 }
+
+const EMPTY_FORM = { name: "", role: "", company: "", location: "", content: "", rating: "5", sort_order: "0", locale: "tr", avatar_url: "" };
 
 export function TestimonialsTable() {
   const [rows, setRows] = useState<Testimonial[]>([]);
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({
-    name: "", role: "", company: "", location: "",
-    content: "", rating: "5", sort_order: "0", locale: "tr",
-  });
+  const [editRow, setEditRow] = useState<Testimonial | null>(null);
+  const [form, setForm] = useState(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
 
   async function load() {
-    const { data } = await createClient()
-      .from("site_testimonials")
-      .select("*")
-      .order("sort_order");
+    const { data } = await createClient().from("site_testimonials").select("*").order("sort_order");
     setRows(data ?? []);
+  }
+
+  function openAdd() {
+    setEditRow(null);
+    setForm(EMPTY_FORM);
+    setOpen(true);
+  }
+
+  function openEdit(row: Testimonial) {
+    setEditRow(row);
+    setForm({
+      name: row.name, role: row.role ?? "", company: row.company ?? "",
+      location: row.location ?? "", content: row.content,
+      rating: String(row.rating), sort_order: String(row.sort_order),
+      locale: row.locale, avatar_url: row.avatar_url ?? "",
+    });
+    setOpen(true);
   }
 
   async function handleSave() {
     setSaving(true);
-    const { error } = await createClient().from("site_testimonials").insert({
-      ...form,
-      rating: Number(form.rating),
-      sort_order: Number(form.sort_order),
-      is_published: true,
-      locale: form.locale,
-    });
+    const payload = {
+      name: form.name, role: form.role, company: form.company,
+      location: form.location, content: form.content,
+      avatar_url: form.avatar_url, locale: form.locale,
+      rating: Number(form.rating), sort_order: Number(form.sort_order),
+    };
+    const db = createClient();
+    const { error } = editRow
+      ? await db.from("site_testimonials").update(payload).eq("id", editRow.id)
+      : await db.from("site_testimonials").insert({ ...payload, is_published: true });
     setSaving(false);
     if (error) { toast.error(error.message); return; }
-    toast.success("Referans eklendi.");
+    toast.success(editRow ? "Güncellendi." : "Referans eklendi.");
     setOpen(false);
-    setForm({ name: "", role: "", company: "", location: "", content: "", rating: "5", sort_order: "0", locale: "tr" });
     load();
   }
 
@@ -70,12 +86,13 @@ export function TestimonialsTable() {
       <AdminTable
         title="Referanslar & Yorumlar"
         addLabel="Referans Ekle"
-        onAdd={() => setOpen(true)}
+        onAdd={openAdd}
         columns={[
           { key: "name", label: "Ad Soyad" },
           { key: "role", label: "Unvan" },
           { key: "company", label: "Klinik/Şirket" },
           { key: "location", label: "Şehir" },
+          { key: "locale", label: "Dil" },
           { key: "rating", label: "Puan", render: (r) => "⭐".repeat(r.rating) },
           { key: "content", label: "Yorum", render: (r) => <span className="line-clamp-1 max-w-xs text-xs">{r.content}</span> },
           { key: "is_published", label: "Durum", render: (r) => (
@@ -85,6 +102,7 @@ export function TestimonialsTable() {
           )},
         ]}
         rows={rows}
+        onEdit={openEdit}
         onDelete={handleDelete}
         emptyText="Henüz referans yok. İlk referansı ekleyin."
       />
@@ -92,7 +110,7 @@ export function TestimonialsTable() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="bg-[#0B172A] border-[#1e2d45] text-white max-w-lg">
           <DialogHeader>
-            <DialogTitle className="text-white">Yeni Referans / Yorum Ekle</DialogTitle>
+            <DialogTitle className="text-white">{editRow ? "Referansı Düzenle" : "Yeni Referans / Yorum Ekle"}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-3">
@@ -118,6 +136,11 @@ export function TestimonialsTable() {
                 <Input value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))}
                   className="bg-[#07111F] border-[#1e2d45] text-white" placeholder="İstanbul" />
               </div>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[#94a3b8]">Avatar (kısaltma, ör: MS)</Label>
+              <Input value={form.avatar_url} onChange={e => setForm(f => ({ ...f, avatar_url: e.target.value }))}
+                className="bg-[#07111F] border-[#1e2d45] text-white" placeholder="MS" maxLength={2} />
             </div>
             <div className="grid grid-cols-3 gap-3">
               <div className="space-y-1">
@@ -152,7 +175,7 @@ export function TestimonialsTable() {
             </div>
             <Button onClick={handleSave} disabled={saving || !form.name || !form.content}
               className="w-full bg-[#2563EB] hover:bg-[#1d4ed8] text-white">
-              {saving ? "Kaydediliyor..." : "Referansı Kaydet"}
+              {saving ? "Kaydediliyor..." : editRow ? "Güncelle" : "Referansı Kaydet"}
             </Button>
           </div>
         </DialogContent>

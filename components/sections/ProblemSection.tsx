@@ -1,49 +1,30 @@
-"use client";
+import { createClient } from "@/lib/supabase/server";
+import { ProblemClient } from "./ProblemClient";
 
-import { useScrollReveal } from "@/lib/useScrollReveal";
-import { XCircle } from "lucide-react";
+const DEFAULT_DATA = {
+  heading: "Hasta, randevu, kasa ve stok takibi dağınık mı?",
+  subheading: "Pek çok klinik bunları hâlâ çözemiyor. Dijivexa tüm bunları tek sistemde toplar.",
+  cta: "✓ Dijivexa Clinic tüm klinik sürecini dijital ortamda toplar.",
+  items: [
+    "Hasta bilgileri WhatsApp'ta dağınık kalıyor.",
+    "Randevular karışıyor, çift kayıt oluşuyor.",
+    "Ödemeler Excel veya kağıtta takip ediliyor.",
+    "Seanslar ve kontrol tarihleri unutuluyor.",
+    "Stok tüketimi takip edilemiyor.",
+    "Personel verimliliği ölçülemiyor.",
+    "Reklamdan gelen leadler kaybolup gidiyor.",
+    "Operasyon belgeleri kağıtta kalıyor.",
+  ],
+};
 
-const problems = [
-  "Hasta bilgileri WhatsApp'ta dağınık kalıyor.",
-  "Randevular karışıyor, çift kayıt oluşuyor.",
-  "Ödemeler Excel veya kağıtta takip ediliyor.",
-  "Seanslar ve kontrol tarihleri unutuluyor.",
-  "Stok tüketimi takip edilemiyor.",
-  "Personel verimliliği ölçülemiyor.",
-  "Reklamdan gelen lead'ler kaybolup gidiyor.",
-  "Operasyon belgeleri kağıtta kalıyor.",
-];
+export async function ProblemSection() {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("site_settings")
+    .select("value")
+    .eq("key", "homepage_problems")
+    .single();
 
-export function ProblemSection() {
-  const ref = useScrollReveal();
-  return (
-    <section ref={ref} className="section-gray py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="gsap-reveal text-center mb-14">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4" style={{ background: "#FEF3C7", color: "#92400E" }}>Sorunlar</span>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: "#0F172A" }}>
-            Hasta, randevu, kasa ve stok takibi <span style={{ color: "#DC2626" }}>dağınık mı?</span>
-          </h2>
-          <p className="max-w-lg mx-auto" style={{ color: "#64748B" }}>
-            Pek çok klinik bunları hâlâ çözemiyor. Dijivexa tüm bunları tek sistemde toplar.
-          </p>
-        </div>
-
-        <div className="gsap-stagger grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-12">
-          {problems.map((p) => (
-            <div key={p} className="gsap-item flex gap-3 p-4 rounded-xl border bg-white hover:shadow-sm transition-all" style={{ borderColor: "#FEE2E2" }}>
-              <XCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#F87171" }} />
-              <p className="text-sm leading-relaxed" style={{ color: "#475569" }}>{p}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="gsap-scale-in text-center p-6 rounded-2xl border" style={{ background: "linear-gradient(135deg, #EFF6FF, #F0FDFA)", borderColor: "#BFDBFE" }}>
-          <p className="font-semibold text-lg" style={{ color: "#1E40AF" }}>
-            ✓ Dijivexa Clinic tüm klinik sürecini dijital ortamda toplar.
-          </p>
-        </div>
-      </div>
-    </section>
-  );
+  const problemData = (data?.value as typeof DEFAULT_DATA) ?? DEFAULT_DATA;
+  return <ProblemClient data={problemData} />;
 }
