@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useScrollReveal } from "@/lib/useScrollReveal";
-import { FinalCTASection } from "@/components/sections/FinalCTASection";
+import { FinalCTASectionStatic } from "@/components/sections/FinalCTASectionStatic";
 import { PageHero } from "@/components/sections/PageHero";
 import {
   Calendar, Users, CreditCard, Package, Bot, MessageCircle,
@@ -145,7 +145,7 @@ export default function OzelliklerPage({
         </div>
       </section>
 
-      <FinalCTASection locale={locale} />
+      <FinalCTASectionStatic locale={locale} />
     </>
   );
 }

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useScrollReveal } from "@/lib/useScrollReveal";
-import { FinalCTASection } from "@/components/sections/FinalCTASection";
+import { FinalCTASectionStatic } from "@/components/sections/FinalCTASectionStatic";
 import { PageHero } from "@/components/sections/PageHero";
 import { CheckCircle2, ChevronDown, ArrowRight, Zap } from "lucide-react";
 import { use } from "react";
@@ -187,7 +187,7 @@ export default function FiyatlandirmaPage({
         </div>
       </section>
 
-      <FinalCTASection locale={locale} />
+      <FinalCTASectionStatic locale={locale} />
     </>
   );
 }

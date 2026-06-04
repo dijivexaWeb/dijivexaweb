@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useScrollReveal } from "@/lib/useScrollReveal";
-import { FinalCTASection } from "@/components/sections/FinalCTASection";
+import { FinalCTASectionStatic } from "@/components/sections/FinalCTASectionStatic";
 import { PageHero } from "@/components/sections/PageHero";
 import { BarChart3, Megaphone, Star, Camera, TrendingUp, Users, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -151,7 +151,7 @@ export default function DijiVexaGrowthPage({
         </div>
       </section>
 
-      <FinalCTASection locale={locale} />
+      <FinalCTASectionStatic locale={locale} />
     </>
   );
 }

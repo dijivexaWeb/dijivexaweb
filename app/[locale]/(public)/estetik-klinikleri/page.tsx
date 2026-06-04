@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useScrollReveal } from "@/lib/useScrollReveal";
-import { FinalCTASection } from "@/components/sections/FinalCTASection";
+import { FinalCTASectionStatic } from "@/components/sections/FinalCTASectionStatic";
 import { PageHero } from "@/components/sections/PageHero";
 import { Users, FileText, Bot, CreditCard, Calendar, Camera, CheckCircle2 } from "lucide-react";
 import { use } from "react";
@@ -138,7 +138,7 @@ export default function EstetikKlinikleriPage({
         </div>
       </section>
 
-      <FinalCTASection locale={locale} />
+      <FinalCTASectionStatic locale={locale} />
     </>
   );
 }

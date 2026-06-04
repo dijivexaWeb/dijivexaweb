@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useScrollReveal } from "@/lib/useScrollReveal";
-import { FinalCTASection } from "@/components/sections/FinalCTASection";
+import { FinalCTASectionStatic } from "@/components/sections/FinalCTASectionStatic";
 import { PageHero } from "@/components/sections/PageHero";
 import { CheckCircle2, MessageCircle, Bell, Users, Megaphone, Star } from "lucide-react";
 import { use } from "react";
@@ -163,7 +163,7 @@ export default function WhatsappTakipPage({
         </div>
       </section>
 
-      <FinalCTASection locale={locale} />
+      <FinalCTASectionStatic locale={locale} />
     </>
   );
 }
