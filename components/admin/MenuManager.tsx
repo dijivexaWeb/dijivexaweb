@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { AdminTable } from "./AdminTable";
+import { AdminTable, StatusBadge } from "./AdminTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,13 +15,15 @@ interface MenuItem { id: string; label: string; href: string; locale: string; so
 interface Menu { id: string; slug: string; name: string; }
 
 const locales = ["tr", "en", "ka", "ru"];
+const EMPTY_FORM = { label: "", href: "", locale: "tr", sort_order: 0 };
 
 export function MenuManager() {
   const [menus, setMenus] = useState<Menu[]>([]);
   const [items, setItems] = useState<MenuItem[]>([]);
   const [activeMenu, setActiveMenu] = useState("header");
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ label: "", href: "", locale: "tr", sort_order: 0 });
+  const [editRow, setEditRow] = useState<MenuItem | null>(null);
+  const [form, setForm] = useState(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
 
   async function load() {
@@ -34,22 +36,41 @@ export function MenuManager() {
     setItems(i.data ?? []);
   }
 
+  function openAdd() {
+    setEditRow(null);
+    setForm(EMPTY_FORM);
+    setOpen(true);
+  }
+
+  function openEdit(row: MenuItem) {
+    setEditRow(row);
+    setForm({ label: row.label, href: row.href ?? "", locale: row.locale, sort_order: row.sort_order });
+    setOpen(true);
+  }
+
   async function handleSave() {
     setSaving(true);
     const menu = menus.find((m) => m.slug === activeMenu);
-    if (!menu) return;
-    const { error } = await createClient().from("site_menu_items").insert({ ...form, menu_id: menu.id, is_active: true });
+    if (!menu) { setSaving(false); return; }
+    const db = createClient();
+    const { error } = editRow
+      ? await db.from("site_menu_items").update({ ...form }).eq("id", editRow.id)
+      : await db.from("site_menu_items").insert({ ...form, menu_id: menu.id, is_active: true });
     setSaving(false);
     if (error) { toast.error("Hata: " + error.message); return; }
-    toast.success("Menü öğesi eklendi.");
+    toast.success(editRow ? "Güncellendi." : "Menü öğesi eklendi.");
     setOpen(false);
-    setForm({ label: "", href: "", locale: "tr", sort_order: 0 });
     load();
   }
 
   async function handleDelete(row: MenuItem) {
     await createClient().from("site_menu_items").delete().eq("id", row.id);
     toast.success("Silindi.");
+    load();
+  }
+
+  async function toggleActive(row: MenuItem) {
+    await createClient().from("site_menu_items").update({ is_active: !row.is_active }).eq("id", row.id);
     load();
   }
 
@@ -73,14 +94,18 @@ export function MenuManager() {
             <AdminTable
               title={m.name}
               addLabel="Öğe Ekle"
-              onAdd={() => setOpen(true)}
+              onAdd={openAdd}
               columns={[
                 { key: "label", label: "Etiket" },
                 { key: "href", label: "Link" },
                 { key: "locale", label: "Dil" },
                 { key: "sort_order", label: "Sıra" },
+                { key: "is_active", label: "Durum", render: (r) => (
+                  <button onClick={() => toggleActive(r)}><StatusBadge value={r.is_active} /></button>
+                )},
               ]}
               rows={filteredItems}
+              onEdit={openEdit}
               onDelete={handleDelete}
               emptyText="Bu menüde öğe yok."
             />
@@ -90,7 +115,7 @@ export function MenuManager() {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="bg-[#0B172A] border-[#1e2d45] text-white max-w-md">
-          <DialogHeader><DialogTitle className="text-white">Menü Öğesi Ekle</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle className="text-white">{editRow ? "Menü Öğesini Düzenle" : "Menü Öğesi Ekle"}</DialogTitle></DialogHeader>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
@@ -115,8 +140,8 @@ export function MenuManager() {
               <Label className="text-[#94a3b8]">Link</Label>
               <Input value={form.href} onChange={(e) => setForm((f) => ({ ...f, href: e.target.value }))} className="bg-[#07111F] border-[#1e2d45] text-white" placeholder="/tr/ozellikler" />
             </div>
-            <Button onClick={handleSave} disabled={saving} className="w-full bg-[#2563EB] hover:bg-[#1d4ed8] text-white">
-              {saving ? "Ekleniyor..." : "Ekle"}
+            <Button onClick={handleSave} disabled={saving || !form.label} className="w-full bg-[#2563EB] hover:bg-[#1d4ed8] text-white">
+              {saving ? "Kaydediliyor..." : editRow ? "Güncelle" : "Ekle"}
             </Button>
           </div>
         </DialogContent>
