@@ -55,7 +55,7 @@ function Dropdown({ items, locale }: { items: DropdownItem[]; locale: string }) 
     >
       {items.map((item) => (
         <Link
-          key={item.href}
+          key={item.label}
           href={`/${locale}${item.href}`}
           className="flex flex-col px-4 py-3 hover:bg-[#2563EB]/10 transition-colors"
         >
