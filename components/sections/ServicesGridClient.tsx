@@ -32,8 +32,8 @@ export function ServicesGridClient({ services, locale }: { services: Service[]; 
             return (
               <motion.div key={s.id}
                 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                whileHover={{ y: -5, scale: 1.01 }} transition={{ delay: i * 0.08, type: "spring", stiffness: 300, damping: 20 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.08, type: "spring", stiffness: 300, damping: 20 }}
+                whileHover={{ y: -5, scale: 1.01 }}
               >
                 <Link href={`/${locale}${s.cta_href || "/" + s.slug}`}
                   className="flex flex-col h-full p-6 rounded-2xl border transition-all hover:shadow-md"
