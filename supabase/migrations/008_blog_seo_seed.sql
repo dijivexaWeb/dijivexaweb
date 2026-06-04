@@ -2,10 +2,18 @@
 -- 008_blog_seo_seed.sql — Blog yazıları + SEO meta seed
 -- ============================================================
 
--- Blog yazısı write policy
-CREATE POLICY IF NOT EXISTS "Auth write site_blog_posts" ON site_blog_posts FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY IF NOT EXISTS "Auth write site_blog_categories" ON site_blog_categories FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY IF NOT EXISTS "Auth write site_seo_meta" ON site_seo_meta FOR ALL TO authenticated USING (true) WITH CHECK (true);
+-- Write policies (IF NOT EXISTS yok, DO $$ bloğu ile güvenli)
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Auth write site_blog_posts' AND tablename = 'site_blog_posts') THEN
+    EXECUTE 'CREATE POLICY "Auth write site_blog_posts" ON site_blog_posts FOR ALL TO authenticated USING (true) WITH CHECK (true)';
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Auth write site_blog_categories' AND tablename = 'site_blog_categories') THEN
+    EXECUTE 'CREATE POLICY "Auth write site_blog_categories" ON site_blog_categories FOR ALL TO authenticated USING (true) WITH CHECK (true)';
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Auth write site_seo_meta' AND tablename = 'site_seo_meta') THEN
+    EXECUTE 'CREATE POLICY "Auth write site_seo_meta" ON site_seo_meta FOR ALL TO authenticated USING (true) WITH CHECK (true)';
+  END IF;
+END $$;
 
 -- Örnek blog yazıları
 INSERT INTO site_blog_posts (slug, locale, title, excerpt, content, author, is_published, published_at) VALUES
@@ -17,6 +25,7 @@ INSERT INTO site_blog_posts (slug, locale, title, excerpt, content, author, is_p
 ## Neden Dijital Dönüşüm?
 
 Geleneksel yöntemlerle yönetilen klinikler şu sorunlarla karşılaşıyor:
+
 - Randevu takibinde hatalar ve çakışmalar
 - Kağıt tabanlı hasta dosyaları
 - Manuel kasa ve stok takibi
@@ -42,10 +51,10 @@ Meta''nın resmi API''si sayesinde onaylı şablon mesajlar otomatik gönderileb
 
 ## Dijivexa ile Neler Otomatik Gönderilir?
 
-1. **Randevu hatırlatma** — 24 saat öncesinden otomatik
-2. **10. gün kontrolü** — Saç ekimi sonrası takip
-3. **Kampanya bildirimi** — Yeni hizmet duyuruları
-4. **Yorum daveti** — Google yorumu için davet
+- Randevu hatırlatma — 24 saat öncesinden otomatik
+- 10. gün kontrolü — Saç ekimi sonrası takip
+- Kampanya bildirimi — Yeni hizmet duyuruları
+- Yorum daveti — Google yorumu için davet
 
 ## Kurulum Ne Kadar Sürer?
 
@@ -59,7 +68,8 @@ Dijivexa''da WhatsApp entegrasyonu birkaç adımda tamamlanıyor. Demo hesabın�
 
 ## Dijivexa AI Asistanı Ne Yapar?
 
-Muayene formundaki verileri (semptomlar, geçmiş tedaviler, fotoğraflar) analiz ederek:
+Muayene formundaki verileri analiz ederek:
+
 - Klinik özet oluşturur
 - Risk faktörlerini vurgular
 - Tedavi önerisi taslağı hazırlar
@@ -83,7 +93,7 @@ INSERT INTO site_seo_meta (page_slug, locale, meta_title, meta_description, og_t
 ('demo', 'tr', '15 Gün Ücretsiz Demo — Dijivexa Clinic', 'Dijivexa Clinic''i 15 gün ücretsiz deneyin. Kredi kartı gerekmez, anında erişim, kurulum desteği dahil.', '15 Gün Ücretsiz Demo', 'Hemen başlayın, kredi kartı gerekmez.', 'index,follow', 0.9),
 ('iletisim', 'tr', 'İletişim — Dijivexa', 'Dijivexa ekibiyle iletişime geçin. Demo talebi, teknik destek veya satış için bize ulaşın.', 'İletişim — Dijivexa', 'Sorularınız için bize ulaşın.', 'index,follow', 0.7),
 ('blog', 'tr', 'Blog — Dijivexa | Klinik Yönetimi ve Dijital Dönüşüm', 'Klinik yönetimi, dijital dönüşüm, WhatsApp pazarlama ve AI sağlık teknolojisi hakkında içerikler.', 'Dijivexa Blog', 'Klinikler için dijital dönüşüm rehberi.', 'index,follow', 0.8),
-('whatsapp-takip', 'tr', 'WhatsApp Takip Sistemi — Dijivexa | Otomatik Hasta Bildirimleri', 'Meta WhatsApp Business API ile randevu hatırlatma, kontrol mesajları ve kampanya bildirimleri otomatik. Dijivexa WhatsApp takip sistemi.', 'Dijivexa WhatsApp Takip', 'Otomatik hasta iletişimi ile randevu kaçırma sıfıra iner.', 'index,follow', 0.8),
-('ai-klinik-asistani', 'tr', 'AI Klinik Asistanı — Dijivexa | Yapay Zeka Destekli Muayene Analizi', 'Muayene formlarını analiz eden, klinik özet ve tedavi önerisi taslağı hazırlayan AI asistanı. Gemini Pro destekli.', 'AI Klinik Asistanı', 'Muayene sürecinizi yapay zeka ile güçlendirin.', 'index,follow', 0.8),
-('sac-ekimi-merkezleri', 'tr', 'Saç Ekimi Merkezleri İçin Yazılım — Dijivexa Clinic', 'Greft takibi, FUE/DHI operasyon modülü, 12 aylık takip planı ve WhatsApp bildirimleri ile saç ekimi operasyonlarını dijitalleştirin.', 'Saç Ekimi Merkezi Yazılımı', 'FUE/DHI operasyon yönetimi ve hasta takibi tek platformda.', 'index,follow', 0.8)
+('whatsapp-takip', 'tr', 'WhatsApp Takip Sistemi — Dijivexa', 'Meta WhatsApp Business API ile randevu hatırlatma, kontrol mesajları ve kampanya bildirimleri otomatik.', 'Dijivexa WhatsApp Takip', 'Otomatik hasta iletişimi.', 'index,follow', 0.8),
+('ai-klinik-asistani', 'tr', 'AI Klinik Asistanı — Dijivexa', 'Muayene formlarını analiz eden, klinik özet ve tedavi önerisi taslağı hazırlayan AI asistanı.', 'AI Klinik Asistanı', 'Muayene sürecinizi yapay zeka ile güçlendirin.', 'index,follow', 0.8),
+('sac-ekimi-merkezleri', 'tr', 'Saç Ekimi Merkezleri İçin Yazılım — Dijivexa Clinic', 'Greft takibi, FUE/DHI operasyon modülü, 12 aylık takip planı ile saç ekimi operasyonlarını dijitalleştirin.', 'Saç Ekimi Merkezi Yazılımı', 'FUE/DHI operasyon yönetimi tek platformda.', 'index,follow', 0.8)
 ON CONFLICT (page_slug, locale) DO NOTHING;
