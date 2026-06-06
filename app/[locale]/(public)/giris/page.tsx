@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
+const TURNSTILE_SITE_KEY = "0x4AAAAAADf1E2WjppMBxAjQ";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,11 +17,36 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileRef = useRef<any>(null);
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
     setError("");
+
+    if (!turnstileToken) {
+      setError("Lütfen robot doğrulamasını tamamlayın.");
+      return;
+    }
+
+    setLoading(true);
+
+    // Turnstile token'ı server'da doğrula
+    const verifyRes = await fetch("/api/verify-turnstile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token: turnstileToken }),
+    });
+
+    const { success } = await verifyRes.json();
+
+    if (!success) {
+      setError("Doğrulama başarısız. Lütfen tekrar deneyin.");
+      setLoading(false);
+      turnstileRef.current?.reset();
+      setTurnstileToken(null);
+      return;
+    }
 
     const supabase = createClient();
     const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -26,6 +54,8 @@ export default function LoginPage() {
     if (error) {
       setError("E-posta veya şifre hatalı.");
       setLoading(false);
+      turnstileRef.current?.reset();
+      setTurnstileToken(null);
       return;
     }
 
@@ -68,13 +98,22 @@ export default function LoginPage() {
                 className="bg-[#07111F] border-[#1e2d45] text-white placeholder:text-[#64748B]"
               />
             </div>
+
+            <Turnstile
+              ref={turnstileRef}
+              siteKey={TURNSTILE_SITE_KEY}
+              onSuccess={(token) => setTurnstileToken(token)}
+              onExpire={() => setTurnstileToken(null)}
+              options={{ theme: "dark" }}
+            />
+
             {error && (
               <p className="text-sm text-red-400">{error}</p>
             )}
             <Button
               type="submit"
               className="w-full bg-[#2563EB] hover:bg-[#1d4ed8] text-white"
-              disabled={loading}
+              disabled={loading || !turnstileToken}
             >
               {loading ? "Giriş yapılıyor..." : "Giriş Yap"}
             </Button>
