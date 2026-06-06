@@ -32,41 +32,23 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      // Turnstile token'ı server'da doğrula
-      const verifyRes = await fetch("/api/verify-turnstile", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: turnstileToken }),
-        signal: AbortSignal.timeout(8000),
-      });
-
-      const { success } = await verifyRes.json();
-
-      if (!success) {
-        setError("Doğrulama başarısız. Lütfen tekrar deneyin.");
-        setLoading(false);
-        turnstileRef.current?.reset();
-        setTurnstileToken(null);
-        return;
-      }
-
       const supabase = createClient();
       const { error } = await supabase.auth.signInWithPassword({ email, password });
 
       if (error) {
         setError("E-posta veya şifre hatalı.");
-        setLoading(false);
         turnstileRef.current?.reset();
         setTurnstileToken(null);
         return;
       }
 
       router.push("/tr/admin");
-    } catch (err) {
+    } catch {
       setError("Bağlantı hatası. Lütfen tekrar deneyin.");
-      setLoading(false);
       turnstileRef.current?.reset();
       setTurnstileToken(null);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -115,9 +97,8 @@ export default function LoginPage() {
               options={{ theme: "dark" }}
             />
 
-            {error && (
-              <p className="text-sm text-red-400">{error}</p>
-            )}
+            {error && <p className="text-sm text-red-400">{error}</p>}
+
             <Button
               type="submit"
               className="w-full bg-[#2563EB] hover:bg-[#1d4ed8] text-white"
