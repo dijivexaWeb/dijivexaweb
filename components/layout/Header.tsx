@@ -181,12 +181,14 @@ export function Header({ locale }: { locale: string }) {
               </AnimatePresence>
             </div>
 
-            <Link
-              href={`/${locale}/giris`}
-              className="px-4 py-2 text-sm text-white/70 hover:text-white transition-colors"
+            <a
+              href="https://app.dijivexa.com/admin"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 text-sm font-medium text-white/70 hover:text-white border border-white/15 hover:border-white/30 rounded-lg transition-colors"
             >
-              {t("login")}
-            </Link>
+              Klinik Girişi
+            </a>
 
             <Link
               href={`/${locale}/demo`}
@@ -244,9 +246,9 @@ export function Header({ locale }: { locale: string }) {
                 )
               ))}
               <div className="pt-6 space-y-3">
-                <Link href={`/${locale}/giris`} onClick={() => setMobileOpen(false)} className="block text-center px-4 py-3 text-[#94a3b8] hover:text-white border border-[#1e2d45] rounded-lg">
-                  {t("login")}
-                </Link>
+                <a href="https://app.dijivexa.com/admin" target="_blank" rel="noopener noreferrer" className="block text-center px-4 py-3 text-[#94a3b8] hover:text-white border border-[#1e2d45] rounded-lg">
+                  Klinik Girişi
+                </a>
                 <Link href={`/${locale}/demo`} onClick={() => setMobileOpen(false)} className="block text-center px-4 py-3 text-white bg-[#2563EB] hover:bg-[#1d4ed8] rounded-lg font-semibold">
                   {t("trialCta")}
                 </Link>
