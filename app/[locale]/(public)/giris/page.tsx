@@ -31,35 +31,43 @@ export default function LoginPage() {
 
     setLoading(true);
 
-    // Turnstile token'ı server'da doğrula
-    const verifyRes = await fetch("/api/verify-turnstile", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token: turnstileToken }),
-    });
+    try {
+      // Turnstile token'ı server'da doğrula
+      const verifyRes = await fetch("/api/verify-turnstile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: turnstileToken }),
+        signal: AbortSignal.timeout(8000),
+      });
 
-    const { success } = await verifyRes.json();
+      const { success } = await verifyRes.json();
 
-    if (!success) {
-      setError("Doğrulama başarısız. Lütfen tekrar deneyin.");
+      if (!success) {
+        setError("Doğrulama başarısız. Lütfen tekrar deneyin.");
+        setLoading(false);
+        turnstileRef.current?.reset();
+        setTurnstileToken(null);
+        return;
+      }
+
+      const supabase = createClient();
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        setError("E-posta veya şifre hatalı.");
+        setLoading(false);
+        turnstileRef.current?.reset();
+        setTurnstileToken(null);
+        return;
+      }
+
+      router.push("/tr/admin");
+    } catch (err) {
+      setError("Bağlantı hatası. Lütfen tekrar deneyin.");
       setLoading(false);
       turnstileRef.current?.reset();
       setTurnstileToken(null);
-      return;
     }
-
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      setError("E-posta veya şifre hatalı.");
-      setLoading(false);
-      turnstileRef.current?.reset();
-      setTurnstileToken(null);
-      return;
-    }
-
-    router.push("/tr/admin");
   }
 
   return (
