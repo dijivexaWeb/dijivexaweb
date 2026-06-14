@@ -1,4 +1,3 @@
-import { createClient } from "@/lib/supabase/server";
 import { HeroClient } from "./HeroClient";
 
 const DEFAULT = {
@@ -15,8 +14,5 @@ const DEFAULT = {
 };
 
 export async function HeroSection({ locale }: { locale: string }) {
-  const supabase = await createClient();
-  const { data } = await supabase.from("site_settings").select("value").eq("key", "section_hero").single();
-  const content = (data?.value as typeof DEFAULT) ?? DEFAULT;
-  return <HeroClient locale={locale} content={content} />;
+  return <HeroClient locale={locale} content={DEFAULT} />;
 }
