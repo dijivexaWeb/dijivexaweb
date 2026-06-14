@@ -78,25 +78,30 @@ export function Header({ locale }: { locale: string }) {
   return (
     <>
       <header
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          scrolled
-            ? "border-b shadow-lg"
-            : "border-b border-white/5"
-        )}
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
         style={{
-          background: scrolled
-            ? "rgba(12,28,65,0.97)"
-            : "rgba(12,28,65,0.85)",
-          backdropFilter: "blur(16px)",
-          borderColor: scrolled ? "rgba(59,130,246,0.15)" : "rgba(255,255,255,0.05)",
-          boxShadow: scrolled ? "0 4px 24px rgba(0,0,0,0.3)" : "none",
+          background: scrolled ? "rgba(8,15,36,0.95)" : "transparent",
+          backdropFilter: scrolled ? "blur(20px)" : "none",
+          borderBottom: scrolled ? "1px solid rgba(59,130,246,0.12)" : "1px solid transparent",
+          boxShadow: scrolled ? "0 4px 32px rgba(0,0,0,0.4)" : "none",
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           {/* Logo */}
-          <Link href={`/${locale}`} className="flex items-center gap-2 shrink-0">
-            <span className="text-xl font-bold text-white tracking-tight">Dijivexa</span>
+          <Link href={`/${locale}`} className="flex items-center gap-2.5 shrink-0 group">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-bold shrink-0 transition-transform group-hover:scale-105"
+              style={{ background: "linear-gradient(135deg, #2563EB, #22D3EE)", boxShadow: "0 4px 16px rgba(37,99,235,0.4)" }}>
+              D
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-bold text-white tracking-tight" style={{ fontFamily: "var(--font-jakarta, system-ui)" }}>
+                dijivexa
+              </span>
+              <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs"
+                style={{ background: "rgba(34,211,238,0.08)", border: "1px solid rgba(34,211,238,0.2)", color: "#67E8F9", fontFamily: "monospace", fontSize: "0.62rem" }}>
+                📍 GE
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
@@ -170,14 +175,19 @@ export function Header({ locale }: { locale: string }) {
               href="https://app.dijivexa.com/admin"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 text-sm font-medium text-white/70 hover:text-white border border-white/15 hover:border-white/30 rounded-lg transition-colors"
+              className="px-4 py-2 text-sm font-medium text-white/50 hover:text-white/80 transition-colors"
             >
               Klinik Girişi
             </a>
 
             <Link
-              href={`/${locale}/demo`}
-              className="px-4 py-2 text-sm font-semibold text-white bg-[#2563EB] hover:bg-[#1d4ed8] rounded-lg transition-colors"
+              href={`/${locale}/iletisim`}
+              className="px-5 py-2.5 text-sm font-semibold text-white rounded-xl transition-all hover:-translate-y-0.5"
+              style={{
+                background: "linear-gradient(135deg, #1D4ED8, #3B82F6)",
+                boxShadow: "0 4px 20px rgba(37,99,235,0.4)",
+                fontFamily: "var(--font-jakarta, system-ui)",
+              }}
             >
               {t("trialCta")}
             </Link>
