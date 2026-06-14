@@ -2,16 +2,11 @@
   "nav": {
     "software": "Yazılım",
     "agency": "Ajans",
-    "solutions": "Çözümler",
-    "ai": "AI",
-    "services": "Hizmetler",
-    "pricing": "Fiyatlandırma",
     "blog": "Blog",
     "contact": "İletişim",
     "login": "Giriş Yap",
-    "trialCta": "Demo Başlat",
-    "demoCta": "İletişime Geç",
-    "location": "Batumi, GE"
+    "trialCta": "Proje Başlat",
+    "demoCta": "İletişime Geç"
   },
   "hero": {
     "badge": "41.6168° N, 41.6367° E — Batumi, Gürcistan",

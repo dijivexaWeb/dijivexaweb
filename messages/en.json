@@ -1,15 +1,12 @@
 {
   "nav": {
-    "product": "Product",
-    "solutions": "Solutions",
-    "ai": "AI",
-    "services": "Services",
-    "pricing": "Pricing",
+    "software": "Software",
+    "agency": "Agency",
     "blog": "Blog",
     "contact": "Contact",
     "login": "Login",
-    "trialCta": "Try Free for 15 Days",
-    "demoCta": "Start Demo"
+    "trialCta": "Start a Project",
+    "demoCta": "Get in Touch"
   },
   "hero": {
     "title": "Manage your business with software, AI and digital growth systems.",

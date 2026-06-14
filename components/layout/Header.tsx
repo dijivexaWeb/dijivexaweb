@@ -15,31 +15,18 @@ const locales = [
   { code: "ru", label: "RU", flag: "🇷🇺" },
 ];
 
-const productItems = [
-  { label: "Dijivexa Clinic", href: "/dijivexa-clinic", desc: "Klinik yönetim yazılımı" },
-  { label: "Hasta & Randevu", href: "/dijivexa-clinic", desc: "Dijital hasta dosyası ve takvim" },
-  { label: "Kasa & Stok", href: "/kasa-stok-yonetimi", desc: "Finansal takip" },
-  { label: "Operasyon Modülü", href: "/operasyon-yonetimi", desc: "Saç ekimi operasyonu" },
-  { label: "WhatsApp Takip", href: "/whatsapp-takip", desc: "Otomatik bildirimler" },
-  { label: "AI Klinik Asistan", href: "/ai-klinik-asistani", desc: "Yapay zeka desteği" },
-  { label: "Tüm Özellikler", href: "/ozellikler", desc: "16+ modül ve özellik" },
+const softwareItems = [
+  { label: "Dijivexa Clinic", href: "/dijivexa-clinic", desc: "Klinik yönetim SaaS platformu" },
+  { label: "Web & Mobil Uygulama", href: "/hizmetler", desc: "Özel web ve mobil geliştirme" },
+  { label: "AI Entegrasyonları", href: "/hizmetler", desc: "Yapay zeka ile otomasyon" },
+  { label: "SaaS & API", href: "/hizmetler", desc: "Ölçeklenebilir platform geliştirme" },
 ];
 
-const solutionItems = [
-  { label: "Saç Ekimi Merkezleri", href: "/sac-ekimi-merkezleri" },
-  { label: "Estetik Klinikleri", href: "/estetik-klinikleri" },
-  { label: "Güzellik Merkezleri", href: "/guzellik-merkezleri" },
-  { label: "Lazer Epilasyon", href: "/lazer-epilasyon-merkezleri" },
-  { label: "Trikoloji Merkezleri", href: "/trikoloji-merkezleri" },
-  { label: "Çok Şubeli Klinikler", href: "/dijivexa-clinic#cok-subeli" },
-];
-
-const serviceItems = [
-  { label: "Dijivexa Growth", href: "/dijivexa-growth", desc: "Sosyal medya & reklam" },
-  { label: "Dijivexa Web", href: "/dijivexa-web", desc: "Web sitesi geliştirme" },
-  { label: "Dijivexa Mobile", href: "/dijivexa-mobile", desc: "Mobil uygulama" },
-  { label: "Dijivexa Studio", href: "/dijivexa-studio", desc: "Özel yazılım" },
-  { label: "Dijivexa AI", href: "/dijivexa-ai", desc: "AI & otomasyon" },
+const agencyItems = [
+  { label: "Sosyal Medya Yönetimi", href: "/hizmetler", desc: "Instagram, Facebook, TikTok" },
+  { label: "Grafik & Logo Tasarımı", href: "/hizmetler", desc: "Kurumsal kimlik ve görseller" },
+  { label: "Kurumsal Web Sitesi", href: "/hizmetler", desc: "Hızlı, SEO'lu, çok dilli" },
+  { label: "Dijital Reklam", href: "/hizmetler", desc: "Google Ads, Meta Ads yönetimi" },
 ];
 
 interface DropdownItem { label: string; href: string; desc?: string; }
@@ -82,10 +69,8 @@ export function Header({ locale }: { locale: string }) {
   }, []);
 
   const navItems = [
-    { key: "product", label: t("product"), items: productItems },
-    { key: "solutions", label: t("solutions"), items: solutionItems },
-    { key: "services", label: t("services"), items: serviceItems },
-    { key: "pricing", label: t("pricing"), href: `/${locale}/fiyatlandirma` },
+    { key: "software", label: t("software"), items: softwareItems },
+    { key: "agency", label: t("agency"), items: agencyItems },
     { key: "blog", label: t("blog"), href: `/${locale}/blog` },
     { key: "contact", label: t("contact"), href: `/${locale}/iletisim` },
   ];
