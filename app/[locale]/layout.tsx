@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -12,13 +12,20 @@ const inter = Inter({
   display: "swap",
 });
 
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-jakarta",
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: {
-    default: "Dijivexa — İşletmeler için akıllı dijital sistemler",
+    default: "Dijivexa — Batumi'den Kafkasya'ya Teknoloji",
     template: "%s | Dijivexa",
   },
   description:
-    "Dijivexa; klinik ve güzellik merkezleri için randevu, hasta takibi, kasa, stok, operasyon ve WhatsApp iletişimini tek platformda birleştirir.",
+    "Yazılım geliştirmeden sosyal medya yönetimine, grafik tasarımdan SaaS ürünlere — Batumi merkezli Kafkasya'nın dijital teknoloji ortağı.",
 };
 
 export default async function LocaleLayout({
@@ -37,7 +44,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={inter.variable}>
+    <html lang={locale} className={`${inter.variable} ${jakarta.variable}`}>
       <body className="min-h-full flex flex-col antialiased">
         <NextIntlClientProvider messages={messages}>
           {children}

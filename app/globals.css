@@ -11,14 +11,29 @@
   --gray-900: #0F172A;
 
   --blue-brand: #2563EB;
+  --blue-500:   #3B82F6;
   --blue-50:    #EFF6FF;
   --teal-brand: #0D9488;
+  --teal-400:   #14B8A6;
   --teal-50:    #F0FDFA;
+  --green-400:  #34D399;
   --amber:      #F59E0B;
 
-  /* Section dark → orta-koyu mavi, cave-black değil */
+  /* Batumi kimliği — Black Sea cyan */
+  --batumi:     #22D3EE;
+  --batumi-dim: rgba(34, 211, 238, 0.08);
+
+  /* Dark section backgrounds */
+  --bg-base:      #080F24;
+  --bg-surface:   #0D1B3E;
+  --bg-surface-2: #0F2553;
   --section-dark-from: #0F2553;
   --section-dark-to:   #1A3A6B;
+
+  /* Borders on dark */
+  --border-dark:       rgba(59, 130, 246, 0.12);
+  --border-dark-strong: rgba(59, 130, 246, 0.25);
+  --border-batumi:     rgba(34, 211, 238, 0.20);
 
   --background: var(--white);
   --foreground: var(--gray-900);
@@ -27,7 +42,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
+  --font-sans:    var(--font-inter);
+  --font-display: var(--font-jakarta);
+  --font-mono:    ui-monospace, 'Geist Mono', monospace;
 }
 
 html { scroll-behavior: smooth; }
@@ -39,14 +56,63 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Display/heading font */
+h1, h2, h3, .font-display {
+  font-family: var(--font-jakarta), var(--font-inter), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Mono accent — koordinatlar, badge'ler, istatistikler */
+.font-mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.03em;
+}
+
+/* ─── Section Utilities ─── */
 .section-white { background: #FFFFFF; }
 .section-gray  { background: #F8FAFC; }
 .section-blue  { background: #EFF6FF; }
 .section-teal  { background: #F0FDFA; }
+.section-base  { background: var(--bg-base); }
 
 .section-dark {
   background: linear-gradient(150deg, #0F2553 0%, #1A3A6B 55%, #112B60 100%);
   color: white;
+}
+
+.section-hero {
+  background: linear-gradient(150deg, #080F24 0%, #0C1A3D 50%, #0F2553 100%);
+  color: white;
+}
+
+/* ─── Batumi Badge ─── */
+.badge-batumi {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  background: var(--batumi-dim);
+  border: 1px solid var(--border-batumi);
+  color: #67E8F9;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Grid Background ─── */
+.grid-dark {
+  background-image:
+    linear-gradient(rgba(59,130,246,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.07) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+.grid-batumi {
+  background-image:
+    linear-gradient(rgba(34,211,238,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,211,238,0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
 /* GSAP — başlangıç durumu JS'e bırakıldı, CSS'te saklanmıyor */

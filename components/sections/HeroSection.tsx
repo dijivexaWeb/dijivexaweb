@@ -2,16 +2,16 @@ import { createClient } from "@/lib/supabase/server";
 import { HeroClient } from "./HeroClient";
 
 const DEFAULT = {
-  badge: "Klinik & Güzellik Merkezleri İçin SaaS Yazılım",
-  heading_line1: "Kliniğinizin Yönetimini",
-  heading_highlight: "Bir Üst Seviyeye",
-  heading_line2: "Taşıyın.",
-  subheading: "Dijivexa; randevu, hasta takibi, kasa, stok, operasyon ve WhatsApp iletişimini tek platformda birleştirir. AI destekli, çok dilli, çok şubeli.",
-  cta_primary: "Ücretsiz Deneyin",
-  cta_primary_href: "/demo",
-  cta_secondary: "Canlı Demo Talep Et",
-  cta_secondary_href: "/iletisim",
-  trust_items: ["Kredi kartı gerekmez", "15 gün ücretsiz", "Kurulum desteği dahil", "Çok dilli"],
+  badge: "41.6168° N, 41.6367° E — Batumi, Gürcistan",
+  heading_line1: "Üretiyoruz.",
+  heading_highlight: "Tasarlarız.",
+  heading_line2: "Batumi'den.",
+  subheading: "Yazılım geliştirmeden sosyal medya yönetimine, grafik tasarımdan SaaS ürünlere — Kafkasya'nın dijital teknoloji ortağı.",
+  cta_primary: "Hizmetleri Keşfet",
+  cta_primary_href: "/hizmetler",
+  cta_secondary: "Dijivexa Clinic'i Dene",
+  cta_secondary_href: "/demo",
+  trust_items: ["Gürcistan kayıtlı şirket", "3 dil bilen ekip", "40+ aktif müşteri", "TR · EN · KA · RU"],
 };
 
 export async function HeroSection({ locale }: { locale: string }) {

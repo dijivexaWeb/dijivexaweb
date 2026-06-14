@@ -1,6 +1,7 @@
 {
   "nav": {
-    "product": "Ürün",
+    "software": "Yazılım",
+    "agency": "Ajans",
     "solutions": "Çözümler",
     "ai": "AI",
     "services": "Hizmetler",
@@ -8,18 +9,34 @@
     "blog": "Blog",
     "contact": "İletişim",
     "login": "Giriş Yap",
-    "trialCta": "15 Gün Ücretsiz Dene",
-    "demoCta": "Demo Başlat"
+    "trialCta": "Demo Başlat",
+    "demoCta": "İletişime Geç",
+    "location": "Batumi, GE"
   },
   "hero": {
-    "title": "İşletmenizi yazılım, AI ve dijital büyüme sistemiyle yönetin.",
-    "subtitle": "Dijivexa; klinik ve güzellik merkezleri için randevu, hasta takibi, kasa, stok, operasyon ve WhatsApp iletişimini tek platformda birleştirir.",
-    "primaryCta": "15 Gün Ücretsiz Dene",
-    "secondaryCta": "Canlı Demo Talep Et",
-    "trust1": "Kurulum desteği dahil",
-    "trust2": "Kredi kartı gerekmez",
-    "trust3": "15 gün ücretsiz demo",
-    "trust4": "Çok dilli kullanım"
+    "badge": "41.6168° N, 41.6367° E — Batumi, Gürcistan",
+    "line1": "Üretiyoruz.",
+    "highlight": "Tasarlarız.",
+    "line2": "Batumi'den.",
+    "subtitle": "Yazılım geliştirmeden sosyal medya yönetimine, grafik tasarımdan SaaS ürünlere — Kafkasya'nın dijital teknoloji ortağı.",
+    "primaryCta": "Hizmetleri Keşfet",
+    "secondaryCta": "Dijivexa Clinic'i Dene",
+    "trust1": "Gürcistan kayıtlı şirket",
+    "trust2": "3 dil bilen ekip",
+    "trust3": "40+ aktif müşteri",
+    "trust4": "TR · EN · KA · RU"
+  },
+  "pillars": {
+    "software": {
+      "title": "Yazılım Ürünleri",
+      "subtitle": "Hayalinizdeki yazılımı inşa ederiz",
+      "items": ["Dijivexa Clinic", "Web & Mobil Geliştirme", "SaaS & API", "AI Entegrasyonları"]
+    },
+    "agency": {
+      "title": "Ajans Hizmetleri",
+      "subtitle": "Dijital kimliğinizi yaratırız",
+      "items": ["Sosyal Medya Yönetimi", "Grafik & Logo Tasarımı", "Web Yapımı", "Dijital Reklam"]
+    }
   },
   "demo": {
     "title": "15 gün ücretsiz demo hesabınızı oluşturun.",
@@ -27,7 +44,8 @@
     "submitCta": "Ücretsiz Demo Başlat"
   },
   "footer": {
-    "tagline": "İşletmeler için akıllı dijital sistemler.",
-    "rights": "Tüm hakları saklıdır."
+    "tagline": "Batumi'den Kafkasya'ya — yazılım üretir, dijital kimlik inşa ederiz.",
+    "rights": "Tüm hakları saklıdır.",
+    "location": "Batumi, Gürcistan"
   }
 }
